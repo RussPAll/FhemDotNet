@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
+  <TopNode>[0-1000]C:\Program Files\NUnit 2.5.8\bin\net-2.0\nunit-console.nunit</TopNode>
+  <SelectedNode>[0-1003]FhemDotNet.spec.ViewFeature.NavigateToHomepage</SelectedNode>
+  <ExcludeCategories>false</ExcludeCategories>
+  <Nodes>
+    <Node UniqueName="[0-1000]C:\Program Files\NUnit 2.5.8\bin\net-2.0\nunit-console.nunit" Expanded="true" />
+    <Node UniqueName="[0-1004]C:\source\private\FhemSpec\trunk\tests\FhemDotNet.spec\bin\Debug\FhemDotNet.spec.dll" Expanded="true" />
+    <Node UniqueName="[0-1005]FhemDotNet" Expanded="true" />
+    <Node UniqueName="[0-1006]FhemDotNet.spec" Expanded="true" />
+    <Node UniqueName="[0-1002]FhemDotNet.spec.ViewFeature" Expanded="true" />
+  </Nodes>
+</VisualState>

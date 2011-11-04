@@ -1,0 +1,9 @@
+<PartCoverSettings>
+  <Target>C:\source\private\FhemSpec\trunk\tools\nunit\nunit-console.exe</Target>
+  <TargetWorkDir>C:\source\private\FhemSpec\trunk\build\tests</TargetWorkDir>
+  <TargetArgs>FhemDotNet.Domain.Tests.dll FhemDotNet.Repository.Tests.dll FhemDotNet.UI.Tests.dll FhemDotNet.Crosscutting.Tests.dll /xml:..\test-reports\TestResults.xml</TargetArgs>
+  <Rule>+[FhemDotNet.CrossCutting]*</Rule>
+  <Rule>+[FhemDotNet.Domain]*</Rule>
+  <Rule>+[FhemDotNet.Repository]*</Rule>
+  <Rule>+[FhemDotNet.UI]FhemDotNet.UI.Controllers*</Rule>
+</PartCoverSettings>

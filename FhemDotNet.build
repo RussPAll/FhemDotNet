@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<project name="FHEM" default="full" basedir=".">    
+    <!-- PROPERTIES -->
+    <property name="build.Target" value="Automated" />
+    <property name="build.Dir" value="build" />
+    <property name="solution.File" value="FhemDotNet.sln" />
+    <property name="msbuild" value="C:/WINDOWS/Microsoft.NET/Framework/v3.5/MSBuild.exe" />
+    <property name="partcover.Dir" value="tools\PartCover 4.0" />
+    <property name="partcover.Output" value="${build.Dir}\test-reports\PartCover.xml" />
+    <property name="test.MinimumCoverage" value="0.5" />
+    <property name="nunit" value="tools/nunit/nunit-console.exe" />
+
+    <target name="build">
+        <delete dir="${build.Dir}" if="${directory::exists(build.Dir)}"/>
+        <exec program="${msbuild}">
+            <arg value="${solution.File}" />
+            <arg value="/p:configuration=${build.Target}" />
+        </exec>
+        <property name="PublishProject.SourceDir" value="src\FhemDotNet.UI" />
+        <property name="PublishProject.DestDir" value="${build.Dir}\FhemDotNet.UI" />
+        <call target="PublishProject" />        
+    </target>
+        
+    <target name="unitTest">
+        <mkdir dir="${build.Dir}\test-reports" />
+        <exec program="${partcover.Dir}\PartCover.exe" workingdir="${partcover.Dir}">
+            <arg value="--settings &quot;..\..\FhemDotNet.PartCover.xml&quot;" />
+            <arg value="--output &quot;..\..\${partcover.Output}&quot;" />
+        </exec>
+
+        <xmlpeek file="${partcover.Output}" property="Test.NumLines" 
+                 xpath="sum(//Type/Method/pt/@len)+sum(//Type/Method[count(pt)=0]/@bodysize)" />
+        <xmlpeek file="${partcover.Output}" property="Test.LinesCovered"
+                 xpath="sum(//Type/Method/pt[@visit>0]/@len)" /> 
+        <property name="Test.ActualCoverage" value="${double::parse(Test.LinesCovered) / double::parse(Test.NumLines)}" />
+
+        <fail if="${double::parse(Test.ActualCoverage) &lt; double::parse(test.MinimumCoverage)}"
+              message="The solution currently has ${math::round(double::parse(Test.ActualCoverage) * 100)}% coverage, less than the required 50%" />
+
+        <echo message="The solution currently has ${math::round(double::parse(Test.ActualCoverage) * 100)}% coverage." />
+    </target>	
+
+    <target name="integrationTest">
+	<if test="${property::exists('WebUIDeployPath') and property::exists('WebUIUrl')}">
+            <property name="PublishProject.SourceDir" value="${build.Dir}\FhemDotNet.UI" />
+            <property name="PublishProject.DestDir" value="${WebUIDeployPath}" />
+            <call target="PublishProject" />
+
+	    <xmlpoke file="${build.Dir}\FhemDotNet.UI.Specs\FhemDotNet.UI.Specs.dll.config"
+                     xpath="//appSettings/add[@key='TestSiteUrl']/@value"
+                     value="${WebUIUrl}" />
+            
+            <exec program="${nunit}" workingdir="${build.Dir}\FhemDotNet.UI.Specs\">
+                <arg value="FhemDotNet.UI.Specs.dll" />
+                <arg value="/xml:..\..\${build.Dir}\test-reports\FhemDotNet.UI.Specs.xml" />
+            </exec>
+        </if>
+    </target>
+
+    <target name="PublishProject">
+        <mkdir dir="${PublishProject.DestDir}" />
+        <copy todir="${PublishProject.DestDir}">
+            <fileset basedir="${PublishProject.SourceDir}">
+                <include name="**" />
+                <exclude name="**.pdb" />
+                <exclude name="**.resx" />
+                <exclude name="**.vb" />
+                <exclude name="**.cs" />
+                <exclude name="**.vbproj" />
+                <exclude name="**.csproj" />
+                <exclude name="**.csproj.user" />
+                <exclude name="**.webinfo" />
+                <exclude name="**.vspscc" />
+                <exclude name="**.scc" />
+                <exclude name="**.qopt" />
+                <exclude name="**/obj/**" />
+                <exclude name="**/.svn/**" />
+            </fileset>
+        </copy>
+    </target>
+</project> 
