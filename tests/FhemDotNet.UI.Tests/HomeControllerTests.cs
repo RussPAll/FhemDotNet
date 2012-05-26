@@ -3,52 +3,88 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using System.Web.Mvc;
-using FhemDotNet.UI.Controllers;
 using System.Collections;
 using Moq;
 using FhemDotNet.Domain;
 using FhemDotNet.Repository.Interfaces;
+using Nancy;
+using Nancy.Testing;
+using Nancy.ViewEngines;
+using Nancy.Responses;
+using FhemDotNet.Domain.Tests.Builders;
+using FhemDotNet.UI.Models;
 
 namespace FhemDotNet.UI.Tests
 {
     [TestFixture]
-    public class HomeControllerTests
+    public class HomeControllerTests : NancyModuleTestBase
     {
+        private Mock<IThermostatRepository> _repositoryMock;
+        private ConfigurableBootstrapper _bootstrapperFake;
+        private Browser _browserFake;
+        
+        [SetUp]
+        public void Setup()
+        {
+            base.Setup();
+
+            _repositoryMock = new Mock<IThermostatRepository>();
+            _bootstrapperFake = new ConfigurableBootstrapper(with =>
+            {
+                with.ViewFactory(ViewFactoryMock.Object);
+                with.Module<HomeModule>();
+                with.Dependency<IThermostatRepository>(_repositoryMock.Object);
+            });
+            _browserFake = new Browser(_bootstrapperFake);
+        }
+
         [Test]
-        public void Index_WhenCreated_ContainsThermostatList()
+        public void Index_WhenCreated_CallsThermostatRepository()
         {
             // Arrange
-            Mock<IThermostatRepository> repositoryMock = new Mock<IThermostatRepository>();
-            repositoryMock.Setup(x => x.GetThermostatList()).Returns(new List<Thermostat>());
+            _repositoryMock.Setup(x => x.GetThermostatList()).Returns(new List<Thermostat>());
+
             // Act
-            var viewResult = (ViewResult)new HomeController(repositoryMock.Object).Index();
+            _browserFake.Get("/");
+
             // Assert
-            Assert.IsNotNull((ICollection)viewResult.ViewData.Model);
+            _repositoryMock.Verify(x => x.GetThermostatList());
         }
 
         [Test]
         public void Index_SingleThermostatInRepository_ThermostatIsPopulated()
         {
             // Arrange
-            Thermostat mockThermostat = new Thermostat
-            {
-                Name = "TestThermostat",
-                CurrentTemp = "20 deg c",
-                DesiredTemp = "19 deg c"
-            };
+            var mockThermostat = ThermostatBuilder.Build();
 
-            Mock<IThermostatRepository> thermostatRepository = new Mock<IThermostatRepository>();
-            thermostatRepository.Setup(x => x.GetThermostatList())
+            _repositoryMock.Setup(x => x.GetThermostatList())
                 .Returns(new List<Thermostat> {mockThermostat});
 
             // Act
-            var viewResult = (ViewResult)new HomeController(thermostatRepository.Object).Index();
-            List<Thermostat> model = (List<Thermostat>)viewResult.ViewData.Model;
+            _browserFake.Get("/");
 
             // Assert
-            Assert.AreEqual(mockThermostat, model.First());
+            ViewFactoryMock.Verify(x => x.RenderView(
+                It.IsAny<string>(),
+                It.Is<IEnumerable<ThermostatViewModel>>(therm => therm.First().Name == mockThermostat.Name),
+                It.IsAny<ViewLocationContext>()));
         }
 
+        [Test]
+        public void Index_SingleThermostatInRepository_ViewReceivesViewModelType()
+        {
+            // Arrange
+            _repositoryMock.Setup(x => x.GetThermostatList())
+                .Returns(new List<Thermostat>());
 
+            // Act
+            _browserFake.Get("/");
+
+            // Assert
+            ViewFactoryMock.Verify(x => x.RenderView(
+                It.IsAny<string>(),
+                It.IsAny<IEnumerable<ThermostatViewModel>>(),
+                It.IsAny<ViewLocationContext>()));
+        }
     }
 }

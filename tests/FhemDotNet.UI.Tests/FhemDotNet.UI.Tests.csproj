@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FhemDotNet.UI.Tests</RootNamespace>
     <AssemblyName>FhemDotNet.UI.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>
@@ -19,6 +19,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,6 +50,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\Moq\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\Nancy\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Testing, Version=0.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\Nancy\Nancy.Testing.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.4.7.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\libs\nunit\nunit.framework.dll</HintPath>
@@ -69,7 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HomeControllerTests.cs" />
-    <Compile Include="InstallersTests\ControllersInstallersTests.cs" />
+    <Compile Include="Mappers\ThermostatMapper_Tests.cs" />
+    <Compile Include="NancyModuleTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -85,7 +95,12 @@
       <Project>{7A07A0A0-D3D6-4A7E-A0CE-10DC2FC24BC7}</Project>
       <Name>FhemDotNet.UI</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FhemDotNet.Domain.Tests\FhemDotNet.Domain.Tests.csproj">
+      <Project>{663992B0-948A-4B8F-81D6-A6D3DD0D054F}</Project>
+      <Name>FhemDotNet.Domain.Tests</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

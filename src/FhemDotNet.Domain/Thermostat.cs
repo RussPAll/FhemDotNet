@@ -9,13 +9,13 @@ namespace FhemDotNet.Domain
     public class Thermostat
     {
         public string Name { get; set; }
-        public string CurrentTemp { get; set; }
-        public string DesiredTemp { get; set; }
+        public float? CurrentTemp { get; set; }
+        public float? DesiredTemp { get; set; }
         public ThermostatMode Mode { get; set; }
 
         public Thermostat()
         {
-            CurrentTemp = "Unknown";
+            CurrentTemp = null;
         }
 
         public override string ToString()

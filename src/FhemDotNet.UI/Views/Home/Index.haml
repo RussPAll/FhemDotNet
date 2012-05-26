@@ -1,0 +1,28 @@
+﻿!!!
+%html(xmlns="http://www.w3.org/1999/xhtml")
+%head(runat="server")
+    %title FhemDotNet - Homepage
+%body
+    %form#thermostats(name="thermostats")
+        %table#thermostatTable"
+            %tr
+                %th Thermostat Name
+                %th Current Temperature
+                %th Desired Temperature
+                %th Mode
+            - for (int index = 0; index < Model.Count(); index++) 
+                %tr#{Model[index].Name}
+                    %td.thermostatName
+                        = Model[index].Name
+                        %input(type="hidden" name="Model[#{index}].name")
+                    %td.currentTemp
+                        = Model[index].CurrentTemp
+                    %td.desiredTemp
+                        %input(name="Model[#{index}].DesiredTemp")
+                        -# span.pendingDesiredTemp
+                        -#    = Model[index].PendingDesiredTemp
+                    %td.mode
+                        %select(name="Model[#{index}].Mode")
+                            %option Auto
+                            %option Manu
+        %input(type="submit" value="Submit")

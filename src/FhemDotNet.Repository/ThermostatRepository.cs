@@ -5,6 +5,7 @@ using FhemDotNet.Repository.Exceptions;
 using System.Xml;
 using System.Diagnostics;
 using System.Globalization;
+using System;
 
 namespace FhemDotNet.Repository
 {
@@ -38,17 +39,28 @@ namespace FhemDotNet.Repository
                 {
                     Name = nameNode.Attributes["value"].Value,
                     CurrentTemp = currentStateNode == null
-                        ? "Unavailable"
-                        : currentStateNode.Attributes["value"].Value,
+                        ? null
+                        : ParseFhemTemperature(currentStateNode.Attributes["value"].Value),
                     DesiredTemp = desiredStateNode == null
-                        ? "Unavailable"
-                        : desiredStateNode.Attributes["value"].Value
+                        ? null
+                        : ParseFhemTemperature(desiredStateNode.Attributes["value"].Value)
                 };
 
                 thermostatList.Add(thermostat);
             }
 
             return thermostatList;
+        }
+
+        private float? ParseFhemTemperature(string tempString)
+        {
+            if (tempString.Contains(" "))
+                tempString = tempString.Substring(0, tempString.IndexOf(" "));
+
+            float result;
+            return (float.TryParse(tempString, out result))
+                ? (float?)result
+                : null;
         }
 
         private XmlDocument GetXmlDocumentFromFhem(string command, int timeout)

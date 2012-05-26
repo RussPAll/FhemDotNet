@@ -56,7 +56,7 @@ namespace FhemDotNet.Repository.Tests
             IList<Thermostat> thermostatList = repository.GetThermostatList();
 
             // Assert
-            Assert.AreEqual("11", thermostatList[0].CurrentTemp);
+            Assert.AreEqual(11, thermostatList[0].CurrentTemp);
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace FhemDotNet.Repository.Tests
             IList<Thermostat> thermostatList = repository.GetThermostatList();
 
             // Assert
-            Assert.AreEqual("12", thermostatList[0].DesiredTemp);
+            Assert.AreEqual(12, thermostatList[0].DesiredTemp);
         }
 
         [Test]

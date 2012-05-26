@@ -15,7 +15,7 @@ namespace FhemDotNet.Domain.Tests
             // Arrange
             Thermostat thermostat = new Thermostat();
             thermostat.Name = "TestDevice";
-            thermostat.CurrentTemp = "10.0";
+            thermostat.CurrentTemp = 10;
             string expectedToString = string.Format(Resources.ToString.Thermostat, thermostat.Name, thermostat.CurrentTemp);
 
             // Act

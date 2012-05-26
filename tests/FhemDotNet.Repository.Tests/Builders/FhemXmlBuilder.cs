@@ -27,8 +27,8 @@ namespace FhemDotNet.Repository.Tests.Builders
                         <INT key=""TYPE"" value=""FHT""/>
                         <ATTR key=""retrycount"" value=""3""/>
                         <STATE key=""actuator"" value=""10"" measured=""2010-10-11 20:33:37""/>
-                        <STATE key=""measured-temp"" value=""11"" measured=""2010-10-11 20:33:37""/>
-                        <STATE key=""desired-temp"" value=""12"" measured=""2010-10-11 20:33:37""/>
+                        <STATE key=""measured-temp"" value=""11.0 (Celsius)"" measured=""2010-10-11 20:33:37""/>
+                        <STATE key=""desired-temp"" value=""12.0"" measured=""2010-10-11 20:33:37""/>
                 </FHT>";
             }
 
