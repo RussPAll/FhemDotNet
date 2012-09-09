@@ -10,7 +10,7 @@
                 %th Current Temperature
                 %th Desired Temperature
                 %th Mode
-            - for (int index = 0; index < Model.Count(); index++) 
+            - for (int index = 0; index < Model.Count; index++) 
                 %tr#{Model[index].Name}
                     %td.thermostatName
                         = Model[index].Name

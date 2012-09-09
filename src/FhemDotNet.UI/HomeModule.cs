@@ -28,7 +28,7 @@ namespace FhemDotNet.UI
                     var viewModel = model.Select(x => new ThermostatViewModel
                         {
                             Name = x.Name
-                        });
+                        }).ToList();
                     return View["Index", viewModel];
                 };
 
