@@ -10,6 +10,7 @@ using FhemDotNet.CrossCutting.Validation;
 using FhemDotNet.CrossCutting;
 using Nancy;
 using FhemDotNet.UI.Models;
+using System.Configuration;
 
 namespace FhemDotNet.UI
 {
@@ -17,7 +18,12 @@ namespace FhemDotNet.UI
     public class HomeModule : NancyModule
     {
         public HomeModule()
-            : this(new ThermostatRepository(new TelnetConnection("localhost", 7072), 1000))
+            : this(new ThermostatRepository(
+                new TelnetConnection(
+                    ConfigurationManager.AppSettings["FhemServerName"],
+                    Convert.ToInt32(ConfigurationManager.AppSettings["FhemServerPort"]))
+                , 1000)
+            )
         { }
 
         public HomeModule(IThermostatRepository thermostatRepository)
