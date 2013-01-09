@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FhemDotNet.Domain;
 using FhemDotNet.Repository.Interfaces;
 using FhemDotNet.Repository.Exceptions;
 using System.Xml;
 using System.Diagnostics;
-using System.Globalization;
-using System;
+using FhemDotNet.Repository.Mappers;
 
 namespace FhemDotNet.Repository
 {
@@ -13,54 +13,20 @@ namespace FhemDotNet.Repository
     public class ThermostatRepository : IThermostatRepository
     {
         private readonly ITelnetConnection _telnetConnection;
-        private readonly int _serverTimeoutMilliseconds;
- 
-        public ThermostatRepository(ITelnetConnection telnetConnection, int serverTimeoutMilliseconds)
+        private const int ServerTimeoutMilliseconds = 500;
+
+        public ThermostatRepository(ITelnetConnection telnetConnection)
         {
             _telnetConnection = telnetConnection;
-            _serverTimeoutMilliseconds = serverTimeoutMilliseconds;
         }
 
         public IList<Thermostat> GetThermostatList()
         {
-            List<Thermostat> thermostatList = new List<Thermostat>();
-
-            XmlDocument document = GetXmlDocumentFromFhem("xmllist", _serverTimeoutMilliseconds);
+            XmlDocument document = GetXmlDocumentFromFhem("xmllist", ServerTimeoutMilliseconds);
             XmlNodeList nodeList = document.SelectNodes("//FHT");
 
-            foreach (XmlNode node in nodeList)
-            {
-                XmlNode nameNode = node.SelectSingleNode("./INT[@key='NAME']");
-                XmlNode currentStateNode = node.SelectSingleNode("./STATE[@key='measured-temp']");
-                XmlNode desiredStateNode = node.SelectSingleNode("./STATE[@key='desired-temp']");
-                //XmlNode idNode = node.SelectSingleNode("./INT[@key='DEF']");
-
-                Thermostat thermostat = new Thermostat()
-                {
-                    Name = nameNode.Attributes["value"].Value,
-                    CurrentTemp = currentStateNode == null
-                        ? null
-                        : ParseFhemTemperature(currentStateNode.Attributes["value"].Value),
-                    DesiredTemp = desiredStateNode == null
-                        ? null
-                        : ParseFhemTemperature(desiredStateNode.Attributes["value"].Value)
-                };
-
-                thermostatList.Add(thermostat);
-            }
-
-            return thermostatList;
-        }
-
-        private float? ParseFhemTemperature(string tempString)
-        {
-            if (tempString.Contains(" "))
-                tempString = tempString.Substring(0, tempString.IndexOf(" "));
-
-            float result;
-            return (float.TryParse(tempString, out result))
-                ? (float?)result
-                : null;
+            return (from XmlNode node in nodeList
+                    select FhemDeviceMapper.GetThermostatFromFhemEntry(node)).ToList();
         }
 
         private XmlDocument GetXmlDocumentFromFhem(string command, int timeout)
@@ -75,7 +41,7 @@ namespace FhemDotNet.Repository
             while (timer.ElapsedMilliseconds < timeout)
             {
                 response += _telnetConnection.Read();
-                XmlDocument document = new XmlDocument();
+                var document = new XmlDocument();
                 try
                 {
                     document.LoadXml(response);

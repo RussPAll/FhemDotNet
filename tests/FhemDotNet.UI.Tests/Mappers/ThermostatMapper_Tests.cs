@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using FhemDotNet.Host.Mappers;
 using NUnit.Framework;
 using FhemDotNet.Domain;
-using FhemDotNet.UI.Mappers;
 
 namespace FhemDotNet.UI.Tests.Mappers
 {
     [TestFixture]
+    // ReSharper disable InconsistentNaming
     public class ThermostatMapper_Tests
     {
         [Test]

@@ -9,20 +9,26 @@ using FhemDotNet.Repository.Tests.Builders;
 namespace FhemDotNet.Repository.Tests
 {
     [TestFixture]
-    public class ThermostatRpositoryTests
+    public class ThermostatRepositoryTests
     {
+        private Mock<ITelnetConnection> _mockTelnet;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _mockTelnet = new Mock<ITelnetConnection>();
+        }
+
         #region GetThermostatList
-        private const int _serverTimeoutMilliseconds = 1000;
 
         [Test]
         public void GetThermostatList_NoThermostats_ReturnsEmptyList()
         {
             // Arrange
-            Mock<ITelnetConnection> mockTelnet = new Mock<ITelnetConnection>();
-            mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetEmptyThermostatList);
+            _mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetEmptyThermostatList);
             
             // Act
-            ThermostatRepository repository = new ThermostatRepository(mockTelnet.Object, _serverTimeoutMilliseconds);
+            var repository = new ThermostatRepository(_mockTelnet.Object);
             IList<Thermostat> thermostatList = repository.GetThermostatList();
 
             // Assert
@@ -33,11 +39,10 @@ namespace FhemDotNet.Repository.Tests
         public void GetThermostatList_SingleThermostat_ThermostatHasName()
         {
             // Arrange
-            Mock<ITelnetConnection> mockTelnet = new Mock<ITelnetConnection>();
-            mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(1));
+            _mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(1));
 
             // Act
-            ThermostatRepository repository = new ThermostatRepository(mockTelnet.Object, _serverTimeoutMilliseconds);
+            var repository = new ThermostatRepository(_mockTelnet.Object);
             IList<Thermostat> thermostatList = repository.GetThermostatList();
 
             // Assert
@@ -48,12 +53,11 @@ namespace FhemDotNet.Repository.Tests
         public void GetThermostatList_SingleThermostat_ThermostatHasCurrentStatus()
         {
             // Arrange
-            Mock<ITelnetConnection> mockTelnet = new Mock<ITelnetConnection>();
-            mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(1));
+            _mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(1));
 
             // Act
-            ThermostatRepository repository = new ThermostatRepository(mockTelnet.Object, _serverTimeoutMilliseconds);
-            IList<Thermostat> thermostatList = repository.GetThermostatList();
+            var repository = new ThermostatRepository(_mockTelnet.Object);
+            var thermostatList = repository.GetThermostatList();
 
             // Assert
             Assert.AreEqual(11, thermostatList[0].CurrentTemp);
@@ -63,12 +67,11 @@ namespace FhemDotNet.Repository.Tests
         public void GetThermostatList_SingleThermostat_ThermostatHasDesiredStatus()
         {
             // Arrange
-            Mock<ITelnetConnection> mockTelnet = new Mock<ITelnetConnection>();
-            mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(1));
+            _mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(1));
 
             // Act
-            ThermostatRepository repository = new ThermostatRepository(mockTelnet.Object, _serverTimeoutMilliseconds);
-            IList<Thermostat> thermostatList = repository.GetThermostatList();
+            var repository = new ThermostatRepository(_mockTelnet.Object);
+            var thermostatList = repository.GetThermostatList();
 
             // Assert
             Assert.AreEqual(12, thermostatList[0].DesiredTemp);
@@ -78,11 +81,10 @@ namespace FhemDotNet.Repository.Tests
         public void GetThermostatList_SingleThermostat_ReturnsThermostat()
         {
             // Arrange
-            Mock<ITelnetConnection> mockTelnet = new Mock<ITelnetConnection>();
-            mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(1));
+            _mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(1));
 
             // Act
-            ThermostatRepository repository = new ThermostatRepository(mockTelnet.Object, _serverTimeoutMilliseconds);
+            var repository = new ThermostatRepository(_mockTelnet.Object);
             IList<Thermostat> thermostatList = repository.GetThermostatList();
 
             // Assert
@@ -93,12 +95,11 @@ namespace FhemDotNet.Repository.Tests
         public void GetThermostatList_FourThermostats_ReturnsFourThermostats()
         {
             // Arrange
-            Mock<ITelnetConnection> mockTelnet = new Mock<ITelnetConnection>();
-            mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(4));
+            _mockTelnet.Setup(x => x.Read()).Returns(FhemXmlBuilder.GetThermostatList(4));
 
             // Act
-            ThermostatRepository repository = new ThermostatRepository(mockTelnet.Object, _serverTimeoutMilliseconds);
-            IList<Thermostat> thermostatList = repository.GetThermostatList();
+            var repository = new ThermostatRepository(_mockTelnet.Object);
+            var thermostatList = repository.GetThermostatList();
 
             // Assert
             Assert.AreEqual(4, thermostatList.Count);
@@ -108,23 +109,33 @@ namespace FhemDotNet.Repository.Tests
         public void GetThermostatList_EmptyStringReturned_ThrowsFhemEmptyResponseException()
         {
             // Arrange
-            Mock<ITelnetConnection> mockTelnet = new Mock<ITelnetConnection>();
+            _mockTelnet.Setup(x => x.Read()).Returns(string.Empty);
 
             // Act
-            ThermostatRepository repository = new ThermostatRepository(mockTelnet.Object, _serverTimeoutMilliseconds);
+            var repository = new ThermostatRepository(_mockTelnet.Object);
             Assert.Throws<FhemEmptyResponseException>(() => repository.GetThermostatList());
         }
 
         [Test]
-        public void GetThermostatList_MalformedStringReturned_ThrowsFhemServerException()
+        public void GetThermostatList_MalformedStringReturned_ThrowsFhemResponseTimeoutException()
         {
             // Arrange
-            Mock<ITelnetConnection> mockTelnet = new Mock<ITelnetConnection>();
-            mockTelnet.Setup(x => x.Read()).Returns("<>Garbage Response");
+            _mockTelnet.Setup(x => x.Read()).Returns("<>Garbage Response");
 
             // Act
-            ThermostatRepository repository = new ThermostatRepository(mockTelnet.Object, _serverTimeoutMilliseconds);
+            var repository = new ThermostatRepository(_mockTelnet.Object);
             Assert.Throws<FhemResponseTimeoutException>(() => repository.GetThermostatList());
+        }
+
+        [Test]
+        public void GetThermostatList_XmlWithoutNodeName_ThrowsFhemMalformedResponseException()
+        {
+            // Arrange
+            _mockTelnet.Setup(x => x.Read()).Returns("<FHZINFO><FHT_LIST><FHT></FHT></FHT_LIST></FHZINFO>");
+
+            // Act
+            var repository = new ThermostatRepository(_mockTelnet.Object);
+            Assert.Throws<FhemMalformedResponseException>(() => repository.GetThermostatList());
         }
 
         #endregion

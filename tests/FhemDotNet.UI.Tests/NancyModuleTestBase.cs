@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
-using Nancy.Testing;
-using Nancy.ViewEngines;
+﻿using Nancy.ViewEngines;
 using Moq;
 using Nancy.Responses;
 
@@ -14,7 +8,7 @@ namespace FhemDotNet.UI.Tests
     {
         protected Mock<IViewFactory> ViewFactoryMock;
 
-        public void Setup()
+        public void SetUp()
         {
             ViewFactoryMock = new Mock<IViewFactory>();
             ViewFactoryMock

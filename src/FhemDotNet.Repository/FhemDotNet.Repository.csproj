@@ -52,8 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\FhemMalformedResponseException.cs" />
     <Compile Include="Exceptions\FhemResponseTimeoutException.cs" />
     <Compile Include="Exceptions\FhemEmptyResponseException.cs" />
+    <Compile Include="FakeThermostatRepository.cs" />
+    <Compile Include="Mappers\FhemDeviceMapper.cs" />
     <Compile Include="Resources\ExceptionMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -61,7 +64,7 @@
     </Compile>
     <Compile Include="ThermostatRepository.cs" />
     <Compile Include="Exceptions\FhemException.cs" />
-    <Compile Include="Interfaces\IDeviceRepository.cs" />
+    <Compile Include="Interfaces\IThermostatRepository.cs" />
     <Compile Include="Interfaces\ITelnetConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TelnetConnection.cs" />

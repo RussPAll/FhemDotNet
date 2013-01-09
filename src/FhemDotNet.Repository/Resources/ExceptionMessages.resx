@@ -120,6 +120,9 @@
   <data name="FhemEmptyResponseExceptionMessage" xml:space="preserve">
     <value>FHEM Telnet server has returned a blank response to command "{0}".</value>
   </data>
+  <data name="FhemMalformedResponseExceptionMessage" xml:space="preserve">
+    <value>FHEM Telnet server has returned a malformed node element. Details: {0}</value>
+  </data>
   <data name="FhemResponseTimeoutExceptionMessage" xml:space="preserve">
     <value>FHEM Telnet server failed to return a valid XML response to the FHEM server command "{0}" within {1} milliseconds.</value>
   </data>

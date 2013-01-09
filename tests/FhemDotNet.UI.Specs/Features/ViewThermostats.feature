@@ -1,4 +1,5 @@
 ﻿@WebDriver
+@IntegrationTests
 Feature: View Thermostats
 	In order to see the current system status
 	As a user

@@ -70,6 +70,15 @@ namespace FhemDotNet.Repository.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FHEM Telnet server has returned a malformed node element. Details: {0}.
+        /// </summary>
+        internal static string FhemMalformedResponseExceptionMessage {
+            get {
+                return ResourceManager.GetString("FhemMalformedResponseExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FHEM Telnet server failed to return a valid XML response to the FHEM server command &quot;{0}&quot; within {1} milliseconds..
         /// </summary>
         internal static string FhemResponseTimeoutExceptionMessage {

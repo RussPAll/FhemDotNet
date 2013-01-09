@@ -7,7 +7,7 @@ using FhemDotNet.CrossCutting;
 
 namespace FhemDotNet.Repository.Tests
 {
-    [TestFixture]
+    [TestFixture, Category("Integration tests")]
     public class TelnetConnectionTests
     {
         #region Constructor tests

@@ -1,4 +1,5 @@
 ﻿@WebDriver
+@IntegrationTests
 Feature: Configure Thermostats
 	In order to change the system state
 	As a user
