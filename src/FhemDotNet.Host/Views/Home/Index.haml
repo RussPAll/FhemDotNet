@@ -7,16 +7,16 @@
             %th Mode
         %tr(ng-repeat="device in devices")
             %td.thermostatName
-                {{device.name}}
+                {{device.Name}}
             %td.currentTemp
                 {{device.currentTemp}}
             %td.desiredTemp
-                %input(value="{{device.desiredTemp}}" readonly="readonly")
+                %input(value="{{device.DesiredTemp}}" readonly="readonly")
             %td.mode
-                %select(ng-model="device.mode" readonly="readonly")
+                %select(ng-model="device.Mode" readonly="readonly")
                     %option Auto
                     %option Manu
             %td.more
-                %a(href="/devices/{{device.name}}") more...
+                %a(href="/devices/{{device.Name}}") more...
 
 %script(src="/scripts/controllers/devices.js")

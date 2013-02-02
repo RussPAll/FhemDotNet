@@ -25,7 +25,7 @@ namespace FhemDotNet.Host
             base.ConfigureConventions(conventions);
 
             conventions.StaticContentsConventions.Add(
-                StaticContentConventionBuilder.AddDirectory("styles", "styles"));
+                StaticContentConventionBuilder.AddDirectory("scripts", "scripts"));
         }
 
         protected override Type RootPathProvider
