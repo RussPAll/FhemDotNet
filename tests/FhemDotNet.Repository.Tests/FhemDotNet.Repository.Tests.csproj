@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\FhemXmlBuilder.cs" />
+    <Compile Include="Mappers\FhemThermostatMapper_Tests.cs" />
     <Compile Include="ThermostatRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TelnetConnectionTests.cs" />

@@ -1,6 +1,4 @@
-﻿//using Nancy.ViewEngines.NHaml;
-
-namespace FhemDotNet.Host.Models
+﻿namespace FhemDotNet.Host.Models
 {
     public class ThermostatViewModel
     {
@@ -9,5 +7,7 @@ namespace FhemDotNet.Host.Models
         public string DesiredTemp { get; set; }
         public string PendingDesiredTemp { get; set; }
         public string Mode { get; set; }
+
+        public DayScheduleViewModel[] DaySchedules { get; set; }
     }
 }

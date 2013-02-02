@@ -1,0 +1,31 @@
+﻿%div Blah
+
+%form(method="post" action="/devices/#{Model.Name}")
+    %ul
+        %li
+            %label(for=Name) Device Name
+            %input(name=Name readonly=readonly value=#{Model.Name})
+        %li
+            %labell(for=Mode) Device Mode
+            %input(name=Mode value=#{Model.Mode})
+        %li
+            %labell(for=CurrentTemp) Current Temperature
+            %input(name=CurrentTemp value=#{Model.CurrentTemp})
+        %li
+            %labell(for=DesiredTemp) Desired Temperature
+            %input(name=DesiredTemp value=#{Model.DesiredTemp})
+    %table
+        %tr
+            %th &nbsp;
+            %th Morning Start
+            %th Morning End
+            %th Evening Start
+            %th Evening End
+        -for (int dayIndex = 0; dayIndex < 7; dayIndex++)
+            %tr
+                %td #{Model.DaySchedules[dayIndex].Name}
+                %td %input(name="Model.DaySchedules[#{dayIndex}].FromAM" value=#{Model.DaySchedules[dayIndex].FromAM})
+                %td %input(name="Model.DaySchedules[#{dayIndex}].ToPM" value=#{Model.DaySchedules[dayIndex].ToAM})
+                %td %input(name="Model.DaySchedules[#{dayIndex}].FromPM" value=#{Model.DaySchedules[dayIndex].FromPM})
+                %td %input(name="Model.DaySchedules[#{dayIndex}].ToPM" value=#{Model.DaySchedules[dayIndex].ToPM})
+    %input(type=submit)

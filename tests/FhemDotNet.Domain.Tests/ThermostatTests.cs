@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace FhemDotNet.Domain.Tests
 {
@@ -13,9 +9,11 @@ namespace FhemDotNet.Domain.Tests
         public void ToString_NormalUse_ReturnsExpectedString()
         {
             // Arrange
-            Thermostat thermostat = new Thermostat();
-            thermostat.Name = "TestDevice";
-            thermostat.CurrentTemp = 10;
+            var thermostat = new Thermostat
+                                 {
+                                     Name = "TestDevice",
+                                     CurrentTemp = 10
+                                 };
             string expectedToString = string.Format(Resources.ToString.Thermostat, thermostat.Name, thermostat.CurrentTemp);
 
             // Act

@@ -1,0 +1,1 @@
+﻿var fhemDotNet = angular.module('fhemDotNet', []);

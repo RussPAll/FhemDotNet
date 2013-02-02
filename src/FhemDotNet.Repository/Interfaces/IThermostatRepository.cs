@@ -6,5 +6,6 @@ namespace FhemDotNet.Repository.Interfaces
     public interface IThermostatRepository
     {
         IList<Thermostat> GetThermostatList();
+        Thermostat GetThermostatByName(string deviceName);
     }
 }

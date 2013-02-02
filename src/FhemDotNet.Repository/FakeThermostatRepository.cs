@@ -37,5 +37,10 @@ namespace FhemDotNet.Repository
         {
             return Thermostats;
         }
+
+        public Thermostat GetThermostatByName(string deviceName)
+        {
+            return Thermostats.FirstOrDefault(x => x.Name == deviceName);
+        }
     }
 }

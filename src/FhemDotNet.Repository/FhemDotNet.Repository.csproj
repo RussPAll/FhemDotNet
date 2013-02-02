@@ -56,7 +56,7 @@
     <Compile Include="Exceptions\FhemResponseTimeoutException.cs" />
     <Compile Include="Exceptions\FhemEmptyResponseException.cs" />
     <Compile Include="FakeThermostatRepository.cs" />
-    <Compile Include="Mappers\FhemDeviceMapper.cs" />
+    <Compile Include="Mappers\FhemThermostatMapper.cs" />
     <Compile Include="Resources\ExceptionMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

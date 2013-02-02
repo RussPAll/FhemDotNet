@@ -16,7 +16,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -48,8 +48,8 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web.NHaml">
-      <HintPath>..\..\libs\System.Web.NHaml\System.Web.NHaml.dll</HintPath>
+    <Reference Include="System.Web.NHaml, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Web.NHaml.4.0.8\lib\net40\System.Web.NHaml.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -58,8 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DevicesModule.cs" />
+    <Compile Include="FhemDotNetRootPathProvider.cs" />
     <Compile Include="HomeModule.cs" />
     <Compile Include="Mappers\ThermostatMapper.cs" />
+    <Compile Include="Models\DayScheduleViewModel.cs" />
     <Compile Include="Models\ThermostatViewModel.cs" />
     <Compile Include="NHamlBootStrapper.cs" />
     <Compile Include="Program.cs" />
@@ -67,7 +70,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="Views\Home\Index.haml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Shared\Application.haml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Views\Devices\Thermostat.haml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -80,6 +90,15 @@
       <Project>{EBD98958-5607-4D16-B828-732FC5D545C8}</Project>
       <Name>FhemDotNet.Repository</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="scripts\angular\angular.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scripts\app.js" />
+    <Content Include="scripts\controllers\devices.js" />
+    <Content Include="scripts\jquery.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

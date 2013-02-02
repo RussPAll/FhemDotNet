@@ -1,30 +1,22 @@
-﻿!!!
-%html(xmlns="http://www.w3.org/1999/xhtml")
-%head(runat="server")
-    %title FhemDotNet - Homepage
-%body
-    %form#thermostats(name="thermostats")
-        %table #thermostatTable
-            %tr
-                %th Thermostat Name
-                %th Current Temperature
-                %th Desired Temperature
-                %th Mode
-            - for (int index = 0; index < Model.Count; index++) 
-                %tr#{Model[index].Name}
-                    %td.thermostatName
-                        = Model[index].Name
-                        %input(type="hidden" name="Model[#{index}].name" readonly="readonly")
-                    %td.currentTemp
-                        = Model[index].CurrentTemp
-                    %td.desiredTemp
-                        %input(name="Model[#{index}].DesiredTemp" readonly="readonly")
-                        -# span.pendingDesiredTemp
-                        -#    = Model[index].PendingDesiredTemp
-                    %td.mode
-                        %select(name="Model[#{index}].Mode" readonly="readonly")
-                            %option Auto
-                            %option Manu	
-                    %td.more
-                        %a(href="/devices/#{Model[index].Name}") more...
-        %input(type="submit" value="Submit")
+﻿%form#thermostats(name="thermostats")
+    %table#thermostatTable(ng-controller="ThermostatListCtrl")
+        %tr
+            %th Thermostat Names
+            %th Current Temperature
+            %th Desired Temperature
+            %th Mode
+        %tr(ng-repeat="device in devices")
+            %td.thermostatName
+                {{device.name}}
+            %td.currentTemp
+                {{device.currentTemp}}
+            %td.desiredTemp
+                %input(value="{{device.desiredTemp}}" readonly="readonly")
+            %td.mode
+                %select(ng-model="device.mode" readonly="readonly")
+                    %option Auto
+                    %option Manu
+            %td.more
+                %a(href="/devices/{{device.name}}") more...
+
+%script(src="/scripts/controllers/devices.js")

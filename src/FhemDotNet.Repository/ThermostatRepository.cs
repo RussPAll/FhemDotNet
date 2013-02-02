@@ -26,7 +26,12 @@ namespace FhemDotNet.Repository
             XmlNodeList nodeList = document.SelectNodes("//FHT");
 
             return (from XmlNode node in nodeList
-                    select FhemDeviceMapper.GetThermostatFromFhemEntry(node)).ToList();
+                    select FhemThermostatMapper.GetThermostatFromFhemEntry(node)).ToList();
+        }
+
+        public Thermostat GetThermostatByName(string deviceName)
+        {
+            return GetThermostatList().FirstOrDefault(x => x.Name == deviceName);
         }
 
         private XmlDocument GetXmlDocumentFromFhem(string command, int timeout)
