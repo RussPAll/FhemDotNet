@@ -3,6 +3,7 @@ using System.Configuration;
 using FhemDotNet.Repository;
 using FhemDotNet.Repository.Interfaces;
 using Nancy;
+using Nancy.Conventions;
 using Nancy.ViewEngines.NHaml;
 
 namespace FhemDotNet.Host
@@ -17,7 +18,22 @@ namespace FhemDotNet.Host
                 (i, n) => new TelnetConnection(ConfigurationManager.AppSettings["FhemServerName"],
                                                Int32.Parse(ConfigurationManager.AppSettings["FhemServerPort"])));
             container.Register<NHamlViewEngine>();
-            //container.AutoRegister();
+        }
+
+        protected override void ConfigureConventions(NancyConventions conventions)
+        {
+            base.ConfigureConventions(conventions);
+
+            conventions.StaticContentsConventions.Add(
+                StaticContentConventionBuilder.AddDirectory("styles", "styles"));
+        }
+
+        protected override Type RootPathProvider
+        {
+            get
+            {
+                return typeof(FhemDotNetRootPathProvider);
+            }
         }
     }
 }
