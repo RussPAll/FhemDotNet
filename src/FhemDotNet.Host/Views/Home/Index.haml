@@ -11,6 +11,7 @@
             %td.currentTemp
                 {{device.currentTemp}}
             %td.desiredTemp
+                %div(slider)
                 %input(value="{{device.DesiredTemp}}" readonly="readonly")
             %td.mode
                 %select(ng-model="device.Mode" readonly="readonly")
