@@ -20,13 +20,13 @@ namespace FhemDotNet.Host
             container.Register<NHamlViewEngine>();
         }
 
-        protected override void ConfigureConventions(NancyConventions conventions)
-        {
-            base.ConfigureConventions(conventions);
+        //protected override void ConfigureConventions(NancyConventions conventions)
+        //{
+        //    base.ConfigureConventions(conventions);
 
-            conventions.StaticContentsConventions.Add(
-                StaticContentConventionBuilder.AddDirectory("scripts", "scripts"));
-        }
+        //    conventions.StaticContentsConventions.Add(
+        //        StaticContentConventionBuilder.AddDirectory("scripts", "scripts"));
+        //}
 
         protected override Type RootPathProvider
         {

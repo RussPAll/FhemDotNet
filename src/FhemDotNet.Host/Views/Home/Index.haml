@@ -1,8 +1,9 @@
-﻿%form#thermostats(name="thermostats")
+﻿%link(rel="stylesheet" type="text/css" href="/content/styles/index.css")
+%form#thermostats(name="thermostats")
     %table#thermostatTable(ng-controller="ThermostatListCtrl")
         %tr
-            %th Thermostat Names
-            %th Current Temperature
+            %th Room
+            %th Current Temp
             %th Desired Temperature
             %th Mode
         %tr(ng-repeat="device in devices")
@@ -11,13 +12,13 @@
             %td.currentTemp
                 {{device.currentTemp}}
             %td.desiredTemp
-                %div(slider)
+                %slider(value="{{device.DesiredTemp}}")
                 %input(value="{{device.DesiredTemp}}" readonly="readonly")
             %td.mode
                 %select(ng-model="device.Mode" readonly="readonly")
-                    %option Auto
-                    %option Manu
+                    %option(value="Auto") Auto
+                    %option(value="Manu") Manu
             %td.more
                 %a(href="/devices/{{device.Name}}") more...
 
-%script(src="/scripts/controllers/devices.js")
+%script(src="/content/scripts/controllers/devices.js")
