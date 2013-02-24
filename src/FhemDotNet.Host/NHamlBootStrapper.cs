@@ -10,7 +10,7 @@ namespace FhemDotNet.Host
 {
     public class NHamlBootstrapper : DefaultNancyBootstrapper
     {
-        protected override void ConfigureRequestContainer(TinyIoC.TinyIoCContainer container, NancyContext context)
+        protected override void ConfigureRequestContainer(Nancy.TinyIoc.TinyIoCContainer container, NancyContext context)
         {
             base.ConfigureRequestContainer(container, context);
             container.Register<IThermostatRepository, FakeThermostatRepository>();
@@ -28,11 +28,11 @@ namespace FhemDotNet.Host
         //        StaticContentConventionBuilder.AddDirectory("scripts", "scripts"));
         //}
 
-        protected override Type RootPathProvider
+        protected override IRootPathProvider RootPathProvider
         {
             get
             {
-                return typeof(FhemDotNetRootPathProvider);
+                return new FhemDotNetRootPathProvider();
             }
         }
     }

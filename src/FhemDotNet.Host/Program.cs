@@ -11,7 +11,12 @@ namespace FhemDotNet.Host
     {
         static void Main(string[] args)
         {
-            var nancyHost = new NancyHost(new Uri("http://localhost:8081"), new NHamlBootstrapper());
+            var hostConfiguration = new HostConfiguration();
+            hostConfiguration.UnhandledExceptionCallback = e =>
+            {
+                throw e;
+            };
+            var nancyHost = new NancyHost(new NHamlBootstrapper(), hostConfiguration, new Uri("http://localhost:8081"));
             nancyHost.Start();
 
             Console.WriteLine("Nancy now listening. Press enter to stop");
