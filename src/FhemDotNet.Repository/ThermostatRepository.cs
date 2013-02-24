@@ -34,6 +34,11 @@ namespace FhemDotNet.Repository
             return GetThermostatList().FirstOrDefault(x => x.Name == deviceName);
         }
 
+        public void SetThermostatDesiredTemp(float newDesiredTemp)
+        {
+            throw new System.NotImplementedException();
+        }
+
         private XmlDocument GetXmlDocumentFromFhem(string command, int timeout)
         {
             _telnetConnection.WriteLine(command);

@@ -2,7 +2,11 @@
     $http.get('/devices').success(function (data) {
         $scope.devices = data;
     });
-//    $scope.devices = [
-//        { name: "Batroom", currentTemp: 20, desiredTemp: 18, mode: 'Manu' }
-//    ];
+
+    $scope.deviceTemperatureChanged = function (deviceName, newDesiredTemp) {
+        $http.put('/devices/' + deviceName + "/desiredTempCommand", { 'NewDesiredTemp': newDesiredTemp}).
+            success(function() {
+                alert("Saved a device change");
+            });
+    };
 });

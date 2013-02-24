@@ -62,6 +62,7 @@
     <Compile Include="FhemDotNetRootPathProvider.cs" />
     <Compile Include="HomeModule.cs" />
     <Compile Include="Mappers\ThermostatMapper.cs" />
+    <Compile Include="Models\DesiredTempCommand.cs" />
     <Compile Include="Models\DayScheduleViewModel.cs" />
     <Compile Include="Models\ThermostatViewModel.cs" />
     <Compile Include="NHamlBootStrapper.cs" />

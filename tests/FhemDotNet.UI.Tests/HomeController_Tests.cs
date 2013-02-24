@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Moq;
 using FhemDotNet.Domain;
 using FhemDotNet.Repository.Interfaces;
+using Nancy;
 using Nancy.Testing;
 using Nancy.ViewEngines;
 using FhemDotNet.Domain.Tests.Builders;
@@ -24,6 +25,8 @@ namespace FhemDotNet.UI.Tests
         public new void SetUp()
         {
             base.SetUp();
+
+            _browserFake = new Browser(new DefaultNancyBootstrapper());
 
             _repositoryMock = new Mock<IThermostatRepository>();
             _bootstrapperFake = new ConfigurableBootstrapper(with =>

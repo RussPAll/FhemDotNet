@@ -12,7 +12,8 @@
             %td.currentTemp
                 {{device.currentTemp}}
             %td.desiredTemp
-                %slider(value="{{device.DesiredTemp}}")
+                %div(ui-slider="{'min':5,'max':29,'step':0.5}" ng-model="device.DesiredTemp"
+                    ng-change="deviceTemperatureChanged(device.Name, device.DesiredTemp)")
                 %input(value="{{device.DesiredTemp}}" readonly="readonly")
             %td.mode
                 %select(ng-model="device.Mode" readonly="readonly")

@@ -7,5 +7,6 @@ namespace FhemDotNet.Repository.Interfaces
     {
         IList<Thermostat> GetThermostatList();
         Thermostat GetThermostatByName(string deviceName);
+        void SetThermostatDesiredTemp(float newDesiredTemp);
     }
 }

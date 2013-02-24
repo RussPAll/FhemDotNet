@@ -14,7 +14,7 @@ namespace FhemDotNet.Host.Mappers
             {
                 Name = input.Name,
                 CurrentTemp = input.CurrentTemp.ToString(),
-                DesiredTemp = input.DesiredTemp.ToString(),
+                DesiredTemp = input.DesiredTemp ?? 5,
                 Mode = input.Mode == ThermostatMode.Auto ? "Auto" : "Manu",
                 DaySchedules = GetDaySchedules(input)
             };

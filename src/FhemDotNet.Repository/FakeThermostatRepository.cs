@@ -42,5 +42,10 @@ namespace FhemDotNet.Repository
         {
             return Thermostats.FirstOrDefault(x => x.Name == deviceName);
         }
+
+        public void SetThermostatDesiredTemp(float newDesiredTemp)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

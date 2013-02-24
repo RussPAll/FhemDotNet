@@ -1,14 +1,14 @@
 ﻿td.desiredTemp
 {
-    width: 11em;
+    width: 19em;
 }
 td.desiredTemp .ui-slider 
 {
-    width: 7em;
+    width: 12em;
     float: left;
     margin: 5px 20px 5px 5px;
 }
 td.desiredTemp input
 {
-    width: 1.5em;
+    width: 2.5em;
 }
