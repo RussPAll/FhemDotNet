@@ -1,4 +1,15 @@
-﻿%link(rel="stylesheet" type="text/css" href="/content/styles/index.css")
+.navbar.navbar-fixed-top.navbar-inverse
+    .navbar-inner
+        %a.brand(href="#") Title
+        %ul.nav
+            %li.active
+                %a(href="#")Home
+            %li
+                %a(href="#")Link
+            %li
+                %a(href="#")Link
+
+%link(rel="stylesheet" type="text/css" href="/content/styles/index.css")
 %form#thermostats(name="thermostats")
     %table#thermostatTable(ng-controller="ThermostatListCtrl")
         %tr
@@ -11,18 +22,18 @@
             %td.thermostatName
                 {{device.Name}}
             %td.currentTemp
-                {{device.CurrentTemp}}
+                {{device.currentTemp}}
             %td.desiredTemp
                 %div(ui-slider="{'min':5,'max':29,'step':0.5}" ng-model="device.DesiredTemp"
                     ng-change="deviceTemperatureChanged(device.Name, device.DesiredTemp)")
-                %input(value="{{device.DesiredTemp}}" readonly="readonly")
+                %input(ng-model="device.DesiredTemp" ng-model-onblur)
             %td.actuator
                 {{device.Actuator}}
             %td.mode
-                %select(ng-model="device.Mode" readonly="readonly")
+                %select(ng-model="device.Mode")
                     %option(value="Auto") Auto
                     %option(value="Manu") Manu
-            %td.more
+            /%td.more
                 %a(href="/devices/{{device.Name}}") more...
 
 %script(src="/content/scripts/controllers/devices.js")
