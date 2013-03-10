@@ -8,11 +8,12 @@ namespace FhemDotNet.Host.Mappers
 {
     public class ThermostatMapper
     {
-        public static ThermostatViewModel DomainToViewModel(Domain.Thermostat input)
+        public static ThermostatViewModel DomainToViewModel(Thermostat input)
         {
             return new ThermostatViewModel
             {
                 Name = input.Name,
+                Actuator = input.Actuator,
                 CurrentTemp = input.CurrentTemp.ToString(),
                 DesiredTemp = input.DesiredTemp ?? 5,
                 Mode = input.Mode == ThermostatMode.Auto ? "Auto" : "Manu",

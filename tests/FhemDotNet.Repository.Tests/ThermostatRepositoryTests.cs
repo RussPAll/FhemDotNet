@@ -9,6 +9,7 @@ using FhemDotNet.Repository.Tests.Builders;
 namespace FhemDotNet.Repository.Tests
 {
     [TestFixture]
+    // ReSharper disable InconsistentNaming
     public class ThermostatRepositoryTests
     {
         private Mock<ITelnetConnection> _mockTelnet;

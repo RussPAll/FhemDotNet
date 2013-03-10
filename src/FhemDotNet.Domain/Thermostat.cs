@@ -11,8 +11,8 @@ namespace FhemDotNet.Domain
         public float? CurrentTemp { get; set; }
         public float? DesiredTemp { get; set; }
         public ThermostatMode Mode { get; set; }
-
         public DaySchedule[] Schedule { get; set; }
+        public string Actuator { get; set; }
 
         public Thermostat()
         {

@@ -52,7 +52,7 @@ namespace FhemDotNet.Repository.Tests.Mappers
         }
 
         [Test]
-        public void GetThermostatList_SingleThermostat_ThermostatHasCurrentStatus()
+        public void GetThermostatList_SingleThermostat_ThermostatHasCorrectFlatProperties()
         {
             // Arrange
             var xmlString = FhemXmlBuilder.GetThermostat("testDevice");
@@ -63,19 +63,8 @@ namespace FhemDotNet.Repository.Tests.Mappers
 
             // Assert
             Assert.AreEqual(11, thermostat.CurrentTemp);
-        }
-
-        [Test]
-        public void GetThermostatList_SingleThermostat_ThermostatHasDesiredStatus()
-        {
-            // Arrange
-            var xmlString = FhemXmlBuilder.GetThermostat("testDevice");
-            var xmlNode = GetXmlNode(xmlString);
-
-            // Act
-            var thermostat = FhemThermostatMapper.GetThermostatFromFhemEntry(xmlNode);
-            // Assert
             Assert.AreEqual(12, thermostat.DesiredTemp);
+            Assert.AreEqual("10", thermostat.Actuator);
         }
 
         [Test]

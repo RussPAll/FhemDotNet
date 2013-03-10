@@ -1,7 +1,6 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using System.Net.Sockets;
-using FhemDotNet.CrossCutting.Validation;
+using FhemDotNet.CrossCutting;
 using FhemDotNet.Repository.Interfaces;
 
 namespace FhemDotNet.Repository
@@ -22,16 +21,14 @@ namespace FhemDotNet.Repository
 
     public class TelnetConnection : ITelnetConnection
     {
-        TcpClient tcpSocket;
+        readonly TcpClient _tcpSocket;
 
         const int TimeOutMs = 100;
 
         public TelnetConnection(string hostname, int portNo)
         {
-            #region Parameter Validation
-            hostname.RequireArgument("hostname").IsNotNullOrEmpty();
-            #endregion
-            tcpSocket = new TcpClient(hostname, portNo);
+            Validation.NotNullOrEmpty(() => hostname);
+            _tcpSocket = new TcpClient(hostname, portNo);
         }
 
         public void WriteLine(string cmd)
@@ -42,9 +39,9 @@ namespace FhemDotNet.Repository
         /// <exception cref="System.ArgumentNullException">cmd is not specified</exception>
         public void Write(string cmd)
         {
-            if (!tcpSocket.Connected) return;
+            if (!_tcpSocket.Connected) return;
             byte[] buf = ASCIIEncoding.ASCII.GetBytes(cmd.Replace("\0xFF", "\0xFF\0xFF"));
-            tcpSocket.GetStream().Write(buf, 0, buf.Length);
+            _tcpSocket.GetStream().Write(buf, 0, buf.Length);
         }
 
         /// <exception cref="System.ArgumentOutOfRangeException">Sleep timeout const is set to an invalid value</exception>
@@ -52,33 +49,33 @@ namespace FhemDotNet.Repository
         /// <exception cref="System.Net.Sockets.SocketException">An error occurred when attempting to access the socket. See the Remarks section for more information.</exception>
         public string Read()
         {
-            if (!tcpSocket.Connected) return null;
+            if (!_tcpSocket.Connected) return null;
             StringBuilder sb = new StringBuilder();
             do
             {
                 ParseTelnet(sb);
                 System.Threading.Thread.Sleep(TimeOutMs);
-            } while (tcpSocket.Available > 0);
+            } while (_tcpSocket.Available > 0);
             return sb.ToString();
         }
 
         public bool IsConnected
         {
-            get { return tcpSocket.Connected; }
+            get { return _tcpSocket.Connected; }
         }
 
         void ParseTelnet(StringBuilder sb)
         {
-            while (tcpSocket.Available > 0)
+            while (_tcpSocket.Available > 0)
             {
-                int input = tcpSocket.GetStream().ReadByte();
+                int input = _tcpSocket.GetStream().ReadByte();
                 switch (input)
                 {
                     case -1:
                         break;
                     case (int)Verbs.Iac:
                         // interpret as command
-                        int inputverb = tcpSocket.GetStream().ReadByte();
+                        int inputverb = _tcpSocket.GetStream().ReadByte();
                         if (inputverb == -1) break;
                         switch (inputverb)
                         {
@@ -91,14 +88,14 @@ namespace FhemDotNet.Repository
                             case (int)Verbs.Will:
                             case (int)Verbs.Wont:
                                 // reply to all commands with "Wont", unless it is Sga (suppres go ahead)
-                                int inputoption = tcpSocket.GetStream().ReadByte();
+                                int inputoption = _tcpSocket.GetStream().ReadByte();
                                 if (inputoption == -1) break;
-                                tcpSocket.GetStream().WriteByte((byte)Verbs.Iac);
+                                _tcpSocket.GetStream().WriteByte((byte)Verbs.Iac);
                                 if (inputoption == (int)Options.Sga)
-                                    tcpSocket.GetStream().WriteByte(inputverb == (int)Verbs.Do ? (byte)Verbs.Will : (byte)Verbs.Do);
+                                    _tcpSocket.GetStream().WriteByte(inputverb == (int)Verbs.Do ? (byte)Verbs.Will : (byte)Verbs.Do);
                                 else
-                                    tcpSocket.GetStream().WriteByte(inputverb == (int)Verbs.Do ? (byte)Verbs.Wont : (byte)Verbs.Dont);
-                                tcpSocket.GetStream().WriteByte((byte)inputoption);
+                                    _tcpSocket.GetStream().WriteByte(inputverb == (int)Verbs.Do ? (byte)Verbs.Wont : (byte)Verbs.Dont);
+                                _tcpSocket.GetStream().WriteByte((byte)inputoption);
                                 break;
                             default:
                                 break;

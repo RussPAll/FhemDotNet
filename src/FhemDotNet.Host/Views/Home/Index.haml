@@ -5,16 +5,19 @@
             %th Room
             %th Current Temp
             %th Desired Temperature
+            %th Actuator %
             %th Mode
         %tr(ng-repeat="device in devices")
             %td.thermostatName
                 {{device.Name}}
             %td.currentTemp
-                {{device.currentTemp}}
+                {{device.CurrentTemp}}
             %td.desiredTemp
                 %div(ui-slider="{'min':5,'max':29,'step':0.5}" ng-model="device.DesiredTemp"
                     ng-change="deviceTemperatureChanged(device.Name, device.DesiredTemp)")
                 %input(value="{{device.DesiredTemp}}" readonly="readonly")
+            %td.actuator
+                {{device.Actuator}}
             %td.mode
                 %select(ng-model="device.Mode" readonly="readonly")
                     %option(value="Auto") Auto

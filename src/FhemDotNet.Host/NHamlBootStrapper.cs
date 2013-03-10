@@ -13,20 +13,20 @@ namespace FhemDotNet.Host
         protected override void ConfigureRequestContainer(Nancy.TinyIoc.TinyIoCContainer container, NancyContext context)
         {
             base.ConfigureRequestContainer(container, context);
-            container.Register<IThermostatRepository, FakeThermostatRepository>();
+            container.Register<IThermostatRepository, ThermostatRepository>();
             container.Register<ITelnetConnection>(
                 (i, n) => new TelnetConnection(ConfigurationManager.AppSettings["FhemServerName"],
                                                Int32.Parse(ConfigurationManager.AppSettings["FhemServerPort"])));
             container.Register<NHamlViewEngine>();
         }
 
-        //protected override void ConfigureConventions(NancyConventions conventions)
-        //{
-        //    base.ConfigureConventions(conventions);
+        protected override void ConfigureConventions(NancyConventions conventions)
+        {
+            base.ConfigureConventions(conventions);
 
-        //    conventions.StaticContentsConventions.Add(
-        //        StaticContentConventionBuilder.AddDirectory("scripts", "scripts"));
-        //}
+            conventions.StaticContentsConventions.Add(
+                StaticContentConventionBuilder.AddDirectory("JsTests", "JsTests"));
+        }
 
         protected override IRootPathProvider RootPathProvider
         {

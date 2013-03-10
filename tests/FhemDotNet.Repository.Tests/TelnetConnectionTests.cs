@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Xml;
 using FhemDotNet.Repository.Interfaces;
 using NUnit.Framework;
 using FhemDotNet.CrossCutting;
@@ -8,20 +7,21 @@ using FhemDotNet.CrossCutting;
 namespace FhemDotNet.Repository.Tests
 {
     [TestFixture, Category("Integration tests")]
+    // ReSharper disable InconsistentNaming
     public class TelnetConnectionTests
     {
         #region Constructor tests
         [Test]
         public void TelnetRepository_ValidParameters_NoException()
         {
-            ITelnetConnection repository = GetTelnetConnection();
+            var repository = GetTelnetConnection();
             Assert.IsNotNull(repository);
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void TelnetRepository_MissingHostname_ThrowsException()
         {
-            ITelnetConnection repository = new TelnetConnection("", 0);
+            Assert.Throws<ArgumentNullException>(() => new TelnetConnection("", 0));
         }
         #endregion
 
@@ -29,7 +29,7 @@ namespace FhemDotNet.Repository.Tests
         [Test]
         public void Read_ValidConnection_BlankResult()
         {
-            ITelnetConnection repository = GetTelnetConnection();
+            var repository = GetTelnetConnection();
             string output = repository.Read();
             Assert.AreEqual(0, output.Length);
         }
@@ -51,8 +51,7 @@ namespace FhemDotNet.Repository.Tests
         #region Utility methods
         private static ITelnetConnection GetTelnetConnection()
         {
-            ITelnetConnection result = new TelnetConnection(ConfigHelper.FhemServerName, ConfigHelper.FhemServerPort);
-            return result;
+            return new TelnetConnection(ConfigHelper.FhemServerName, ConfigHelper.FhemServerPort);
         }
         #endregion
     }
