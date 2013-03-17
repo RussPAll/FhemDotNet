@@ -6,12 +6,7 @@ namespace FhemDotNet.Domain
     {
         public static ThermostatList Load(IThermostatRepository repository)
         {
-            return (ThermostatList)repository.GetThermostatList();
+            return repository.GetThermostatList();
         }
-    }
-
-    public interface IThermostatRepository
-    {
-        List<Thermostat> GetThermostatList();
     }
 }

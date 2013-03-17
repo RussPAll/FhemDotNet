@@ -27,7 +27,8 @@ namespace FhemDotNet.Repository.Mappers
                                      Name = nameNode.Attributes["value"].Value,
                                      CurrentTemp = GetTemperatureFromNode(node, XPathSelectors.NodeMeasuredTemp),
                                      DesiredTemp = GetTemperatureFromNode(node, XPathSelectors.NodeDesiredTemp),
-                                     Actuator = GetValueFromNode(node, XPathSelectors.Actuator)
+                                     Actuator = GetValueFromNode(node, XPathSelectors.Actuator),
+                                     Mode = NullMeasurement<ThermostatMode>.Instance
                                  };
             GetScheduleFromNode(thermostat.Schedule, node);
             return thermostat;
@@ -71,8 +72,9 @@ namespace FhemDotNet.Repository.Mappers
         private static Measurement<float?> GetTemperatureFromNode(XmlNode fhemNode, string xPathSelector)
         {
             var node = GetValueFromNode(fhemNode, xPathSelector);
+            if (node is NullMeasurement<string> || string.IsNullOrEmpty(node.Value))
+                return NullMeasurement<float?>.Instance;
             string value = node.Value;
-            if (string.IsNullOrEmpty(value)) return null;
 
             if (value.Contains(" "))
                 value = value.Substring(0, value.IndexOf(" ", StringComparison.Ordinal));
@@ -85,15 +87,34 @@ namespace FhemDotNet.Repository.Mappers
 
         private static Measurement<string> GetValueFromNode(XmlNode fhemNode, string xPathSelector)
         {
-            if (fhemNode == null) return null;
+            if (fhemNode == null) return NullMeasurement<string>.Instance;
             var resultNode = fhemNode.SelectSingleNode(xPathSelector);
 
-            if (resultNode == null || resultNode.Attributes == null) return null;
+            if (resultNode == null || resultNode.Attributes == null) return NullMeasurement<string>.Instance;
 
             return new Measurement<string>(
                 resultNode.Attributes["value"].Value,
                 DateTime.Parse(resultNode.Attributes["measured"].Value));
         }
 
+    }
+
+    public class NullMeasurement<T> : Measurement<T>
+    {
+        private static NullMeasurement<T> _instance;
+
+        private NullMeasurement()
+        : base(default(T), DateTime.MinValue)
+        { }
+
+        public static NullMeasurement<T> Instance 
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new NullMeasurement<T>();
+                return _instance;
+            }
+        }
     }
 }

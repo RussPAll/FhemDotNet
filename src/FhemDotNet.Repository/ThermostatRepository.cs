@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using FhemDotNet.Domain;
 using FhemDotNet.Repository.Interfaces;
 using FhemDotNet.Repository.Exceptions;
@@ -20,24 +19,14 @@ namespace FhemDotNet.Repository
             _telnetConnection = telnetConnection;
         }
 
-        public List<Thermostat> GetThermostatList()
+        public ThermostatList GetThermostatList()
         {
             var document = GetXmlDocumentFromFhem("xmllist", ServerTimeoutMilliseconds);
             var nodeList = document.SelectNodes("//FHT");
 
             return (from XmlNode node in nodeList
-                    select FhemThermostatMapper.GetThermostatFromFhemEntry(node)).ToList();
+                    select FhemThermostatMapper.GetThermostatFromFhemEntry(node)).ToThermostatList();
         }
-
-        //public Thermostat GetThermostatByName(string deviceName)
-        //{
-        //    return GetThermostatList().FirstOrDefault(x => x.Name == deviceName);
-        //}
-
-        //public void SetThermostatDesiredTemp(float newDesiredTemp)
-        //{
-        //    throw new System.NotImplementedException();
-        //}
 
         private XmlDocument GetXmlDocumentFromFhem(string command, int timeout)
         {

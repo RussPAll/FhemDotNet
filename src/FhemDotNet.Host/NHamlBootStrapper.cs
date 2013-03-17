@@ -14,8 +14,8 @@ namespace FhemDotNet.Host
         protected override void ConfigureRequestContainer(Nancy.TinyIoc.TinyIoCContainer container, NancyContext context)
         {
             base.ConfigureRequestContainer(container, context);
-            //container.Register<IThermostatRepository, ThermostatRepository>();
-            container.Register<IThermostatRepository, FakeThermostatRepository>();
+            container.Register<IThermostatRepository, ThermostatRepository>();
+            //container.Register<IThermostatRepository, FakeThermostatRepository>();
             container.Register<ITelnetConnection>(
                 (i, n) => new TelnetConnection(ConfigurationManager.AppSettings["FhemServerName"],
                                                Int32.Parse(ConfigurationManager.AppSettings["FhemServerPort"])));

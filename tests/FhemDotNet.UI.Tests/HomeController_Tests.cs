@@ -5,7 +5,6 @@ using FhemDotNet.Host.Models;
 using NUnit.Framework;
 using Moq;
 using FhemDotNet.Domain;
-using FhemDotNet.Repository.Interfaces;
 using Nancy;
 using Nancy.Testing;
 using Nancy.ViewEngines;
@@ -42,7 +41,7 @@ namespace FhemDotNet.UI.Tests
         public void Index_WhenCreated_CallsThermostatRepository()
         {
             // Arrange
-            _repositoryMock.Setup(x => x.GetThermostatList()).Returns(new List<Thermostat>());
+            _repositoryMock.Setup(x => x.GetThermostatList()).Returns(new ThermostatList());
 
             // Act
             _browserFake.Get("/");
@@ -58,7 +57,7 @@ namespace FhemDotNet.UI.Tests
             var mockThermostat = ThermostatBuilder.Build();
 
             _repositoryMock.Setup(x => x.GetThermostatList())
-                .Returns(new List<Thermostat> {mockThermostat});
+                .Returns(new ThermostatList {mockThermostat});
 
             // Act
             _browserFake.Get("/");
@@ -75,7 +74,7 @@ namespace FhemDotNet.UI.Tests
         {
             // Arrange
             _repositoryMock.Setup(x => x.GetThermostatList())
-                .Returns(new List<Thermostat>());
+                .Returns(new ThermostatList());
 
             // Act
             _browserFake.Get("/");

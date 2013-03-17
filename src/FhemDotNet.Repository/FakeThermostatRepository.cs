@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using FhemDotNet.Domain;
 
@@ -7,7 +6,7 @@ namespace FhemDotNet.Repository
 {
     public class FakeThermostatRepository : IThermostatRepository
     {
-        private static readonly IList<Thermostat> Thermostats;
+        private static readonly ThermostatList Thermostats;
 
         static FakeThermostatRepository()
         {
@@ -31,9 +30,9 @@ namespace FhemDotNet.Repository
                 };
         }
 
-        public List<Thermostat> GetThermostatList()
+        public ThermostatList GetThermostatList()
         {
-            return (List<Thermostat>)Thermostats;
+            return Thermostats;
         }
 
         public Thermostat GetThermostatByName(string deviceName)
