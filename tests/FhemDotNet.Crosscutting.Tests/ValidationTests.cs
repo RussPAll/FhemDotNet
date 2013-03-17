@@ -5,6 +5,7 @@ using NUnit.Framework;
 namespace FhemDotNet.Crosscutting.Tests
 {
     [TestFixture]
+    // ReSharper disable InconsistentNaming
     public class ValidationTests
     {
         [Test]
@@ -26,7 +27,7 @@ namespace FhemDotNet.Crosscutting.Tests
         [Test]
         public void NotNullOrEmpty_NonEmptyString_DoesNotThrowArgumentNullException()
         {
-            string value = "blah";
+            const string value = "blah";
             Assert.DoesNotThrow(
                 () => Validation.NotNullOrEmpty(() => value));
         }

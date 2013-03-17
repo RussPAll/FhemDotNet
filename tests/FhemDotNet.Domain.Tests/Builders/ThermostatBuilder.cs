@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FhemDotNet.Domain.Tests.Builders
 {
@@ -17,9 +14,9 @@ namespace FhemDotNet.Domain.Tests.Builders
             return new Thermostat
             {
                 Name = thermostatName,
-                CurrentTemp = currentTemp,
-                DesiredTemp = desiredTemp,
-                Mode = ThermostatMode.Manu
+                CurrentTemp = new Measurement<float?>(currentTemp, DateTime.Now),
+                DesiredTemp = new Measurement<float?>(desiredTemp, DateTime.Now),
+                Mode = new Measurement<ThermostatMode>(ThermostatMode.Manu, DateTime.Now)
             };
         }
     }

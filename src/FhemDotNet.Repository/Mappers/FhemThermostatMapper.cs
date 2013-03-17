@@ -53,7 +53,8 @@ namespace FhemDotNet.Repository.Mappers
         private static DateTime? GetFhemPeriodTime(XmlNode node, int day, int period, bool isTo)
         {
             string fhemKey = GetFhemPeriodKey(day, period, isTo);
-            string value = GetValueFromNode(node, "./STATE[@key='" + fhemKey + "']");
+            var fhemNode = GetValueFromNode(node, "./STATE[@key='" + fhemKey + "']");
+            string value = fhemNode != null ? fhemNode.Value : null;
             return string.IsNullOrEmpty(value)
                        ? null
                        : (DateTime?) DateTime.Parse(value);
@@ -67,28 +68,31 @@ namespace FhemDotNet.Repository.Mappers
                                  period + 1);
         }
 
-        private static float? GetTemperatureFromNode(XmlNode fhemNode, string xPathSelector)
+        private static Measurement<float?> GetTemperatureFromNode(XmlNode fhemNode, string xPathSelector)
         {
-            var value = GetValueFromNode(fhemNode, xPathSelector);
+            var node = GetValueFromNode(fhemNode, xPathSelector);
+            string value = node.Value;
             if (string.IsNullOrEmpty(value)) return null;
-            
+
             if (value.Contains(" "))
                 value = value.Substring(0, value.IndexOf(" ", StringComparison.Ordinal));
 
             float result;
-            return (float.TryParse(value, out result))
-                       ? (float?)result
+            return float.TryParse(value, out result)
+                       ? new Measurement<float?>(result, node.Timestamp)
                        : null;
         }
 
-        private static string GetValueFromNode(XmlNode fhemNode, string xPathSelector)
+        private static Measurement<string> GetValueFromNode(XmlNode fhemNode, string xPathSelector)
         {
             if (fhemNode == null) return null;
             var resultNode = fhemNode.SelectSingleNode(xPathSelector);
 
             if (resultNode == null || resultNode.Attributes == null) return null;
 
-            return resultNode.Attributes["value"].Value;
+            return new Measurement<string>(
+                resultNode.Attributes["value"].Value,
+                DateTime.Parse(resultNode.Attributes["measured"].Value));
         }
 
     }

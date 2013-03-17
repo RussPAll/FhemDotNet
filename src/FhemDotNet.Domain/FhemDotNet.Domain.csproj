@@ -52,20 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DaySchedule.cs" />
+    <Compile Include="Measurement.cs" />
     <Compile Include="Thermostat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\ToString.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ToString.resx</DependentUpon>
-    </Compile>
+    <Compile Include="ThermostatList.cs" />
+    <Compile Include="DevicesInteractor.cs" />
     <Compile Include="ThermostatModeEnum.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\ToString.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ToString.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Compile Include="TimePeriod.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

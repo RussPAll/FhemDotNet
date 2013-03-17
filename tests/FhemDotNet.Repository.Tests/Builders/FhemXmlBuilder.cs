@@ -29,9 +29,9 @@
                         <INT key=""STATE"" value=""???""/>
                         <INT key=""TYPE"" value=""FHT""/>
                         <ATTR key=""retrycount"" value=""3""/>
-                        <STATE key=""actuator"" value=""10"" measured=""2010-10-11 20:33:37""/>
-                        <STATE key=""measured-temp"" value=""11.0 (Celsius)"" measured=""2010-10-11 20:33:37""/>
-                        <STATE key=""desired-temp"" value=""12.0"" measured=""2010-10-11 20:33:37""/>";
+                        <STATE key=""actuator"" value=""10"" measured=""2010-10-11 01:10:11""/>
+                        <STATE key=""measured-temp"" value=""11.0 (Celsius)"" measured=""2010-10-11 02:20:22""/>
+                        <STATE key=""desired-temp"" value=""12.0"" measured=""2010-10-11 03:30:33""/>";
             if (includeTimingData)
                 result += "\n" + GetThermostatTimingData();
             return result + "\n</FHT>";

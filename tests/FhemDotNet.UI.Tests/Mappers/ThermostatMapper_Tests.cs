@@ -15,9 +15,9 @@ namespace FhemDotNet.UI.Tests.Mappers
             var input = new Thermostat
             {
                 Name = "DeviceName",
-                CurrentTemp = 10,
-                DesiredTemp = 10,
-                Mode = ThermostatMode.Manu
+                CurrentTemp = new Measurement<float?>(10, DateTime.Now),
+                DesiredTemp = new Measurement<float?>(10, DateTime.Now),
+                Mode = new Measurement<ThermostatMode>(ThermostatMode.Manu, DateTime.Now)
             };
 
             var result = ThermostatMapper.DomainToViewModel(input);

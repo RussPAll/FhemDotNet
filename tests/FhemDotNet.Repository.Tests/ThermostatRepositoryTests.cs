@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using NUnit.Framework;
 using FhemDotNet.Repository.Exceptions;
 using Moq;
 using FhemDotNet.Repository.Interfaces;
-using FhemDotNet.Domain;
 using FhemDotNet.Repository.Tests.Builders;
 
 namespace FhemDotNet.Repository.Tests
@@ -30,10 +29,10 @@ namespace FhemDotNet.Repository.Tests
             
             // Act
             var repository = new ThermostatRepository(_mockTelnet.Object);
-            IList<Thermostat> thermostatList = repository.GetThermostatList();
+            var thermostatList = repository.GetThermostatList();
 
             // Assert
-            Assert.AreEqual(0, thermostatList.Count);
+            Assert.AreEqual(0, thermostatList.Count());
         }
 
         [Test]
@@ -44,10 +43,10 @@ namespace FhemDotNet.Repository.Tests
 
             // Act
             var repository = new ThermostatRepository(_mockTelnet.Object);
-            IList<Thermostat> thermostatList = repository.GetThermostatList();
+            var thermostatList = repository.GetThermostatList();
 
             // Assert
-            Assert.AreEqual(1, thermostatList.Count);
+            Assert.AreEqual(1, thermostatList.Count());
         }
 
         [Test]
@@ -61,7 +60,7 @@ namespace FhemDotNet.Repository.Tests
             var thermostatList = repository.GetThermostatList();
 
             // Assert
-            Assert.AreEqual(4, thermostatList.Count);
+            Assert.AreEqual(4, thermostatList.Count());
         }
 
         [Test]

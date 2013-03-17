@@ -62,9 +62,12 @@ namespace FhemDotNet.Repository.Tests.Mappers
             var thermostat = FhemThermostatMapper.GetThermostatFromFhemEntry(xmlNode);
 
             // Assert
-            Assert.AreEqual(11, thermostat.CurrentTemp);
-            Assert.AreEqual(12, thermostat.DesiredTemp);
-            Assert.AreEqual("10", thermostat.Actuator);
+            Assert.AreEqual(11, thermostat.CurrentTemp.Value);
+            Assert.AreEqual(DateTime.Parse("2010-10-11 02:20:22"), thermostat.CurrentTemp.Timestamp);
+            Assert.AreEqual(12, thermostat.DesiredTemp.Value);
+            Assert.AreEqual(DateTime.Parse("2010-10-11 03:30:33"), thermostat.DesiredTemp.Timestamp);
+            Assert.AreEqual("10", thermostat.Actuator.Value);
+            Assert.AreEqual(DateTime.Parse("2010-10-11 01:10:11"), thermostat.Actuator.Timestamp);
         }
 
         [Test]

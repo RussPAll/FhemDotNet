@@ -20,24 +20,24 @@ namespace FhemDotNet.Repository
             _telnetConnection = telnetConnection;
         }
 
-        public IList<Thermostat> GetThermostatList()
+        public List<Thermostat> GetThermostatList()
         {
-            XmlDocument document = GetXmlDocumentFromFhem("xmllist", ServerTimeoutMilliseconds);
-            XmlNodeList nodeList = document.SelectNodes("//FHT");
+            var document = GetXmlDocumentFromFhem("xmllist", ServerTimeoutMilliseconds);
+            var nodeList = document.SelectNodes("//FHT");
 
             return (from XmlNode node in nodeList
                     select FhemThermostatMapper.GetThermostatFromFhemEntry(node)).ToList();
         }
 
-        public Thermostat GetThermostatByName(string deviceName)
-        {
-            return GetThermostatList().FirstOrDefault(x => x.Name == deviceName);
-        }
+        //public Thermostat GetThermostatByName(string deviceName)
+        //{
+        //    return GetThermostatList().FirstOrDefault(x => x.Name == deviceName);
+        //}
 
-        public void SetThermostatDesiredTemp(float newDesiredTemp)
-        {
-            throw new System.NotImplementedException();
-        }
+        //public void SetThermostatDesiredTemp(float newDesiredTemp)
+        //{
+        //    throw new System.NotImplementedException();
+        //}
 
         private XmlDocument GetXmlDocumentFromFhem(string command, int timeout)
         {

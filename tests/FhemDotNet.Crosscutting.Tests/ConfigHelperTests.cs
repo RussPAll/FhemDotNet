@@ -5,18 +5,18 @@ using FhemDotNet.CrossCutting;
 namespace FhemDotNet.Crosscutting.Tests
 {
     [TestFixture]
+    // ReSharper disable InconsistentNaming
     public class ConfigHelperTests
     {
-        #region FhemServerName
-        [Test, ExpectedException(typeof(ConfigurationErrorsException))]
+        [Test]
         public void FhemServerName_NoConfigAvailable_ThrowsException()
         {
-            // Act
-            string result = ConfigHelper.FhemServerName;
+            // ReSharper disable UnusedVariable
+            Assert.Throws<ConfigurationErrorsException>(
+                () => { string result = ConfigHelper.FhemServerName; });
+            // ReSharper restore UnusedVariable
         }
-        #endregion
 
-        #region FhemServerPort
         [Test]
         public void FhemServerPort_NoConfigAvailable_ReturnsPort7072()
         {
@@ -26,7 +26,6 @@ namespace FhemDotNet.Crosscutting.Tests
             // Assert
             Assert.AreEqual(7072, result);
         }
-        #endregion
 
         #region GetAppSetting
         [Test, ExpectedException(typeof(ConfigurationErrorsException))]
@@ -55,7 +54,7 @@ namespace FhemDotNet.Crosscutting.Tests
         public void GetIntAppSetting_ConfigIsValidInt_ReturnsInt()
         {
             // Arrange
-            int expectedResult = 1000;
+            const int expectedResult = 1000;
 
             // Act
             int actualResult = new ConfigHelper().GetIntAppSetting("NonExistentField", expectedResult);
@@ -68,7 +67,7 @@ namespace FhemDotNet.Crosscutting.Tests
         public void GetIntAppSetting_ConfigIsInvalidInt_ThrowsException()
         {
             // Arrange
-            int expectedResult = 1000;
+            const int expectedResult = 1000;
 
             // Act
             int actualResult = new BogusNumberConfigHelper().GetIntAppSetting("NonExistentField", expectedResult);

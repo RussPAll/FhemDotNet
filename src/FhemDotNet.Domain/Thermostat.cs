@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-
-namespace FhemDotNet.Domain
+﻿namespace FhemDotNet.Domain
 {
     public class Thermostat
     {
         public string Name { get; set; }
-        public float? CurrentTemp { get; set; }
-        public float? DesiredTemp { get; set; }
-        public ThermostatMode Mode { get; set; }
+        public Measurement<float?> CurrentTemp { get; set; }
+        public Measurement<float?> DesiredTemp { get; set; }
+        public Measurement<ThermostatMode> Mode { get; set; }
+        public Measurement<string> Actuator { get; set; }
         public DaySchedule[] Schedule { get; set; }
-        public string Actuator { get; set; }
 
         public Thermostat()
         {
@@ -23,35 +18,8 @@ namespace FhemDotNet.Domain
         }
 
         public override string ToString()
-        {   
-            return string.Format(CultureInfo.InvariantCulture, Resources.ToString.Thermostat, Name, CurrentTemp);
-        }
-    }
-
-    public class DaySchedule
-    {
-        private readonly IList<TimePeriod> _periods = new List<TimePeriod>();
-
-        public IEnumerable<TimePeriod> Periods
         {
-            get { return _periods.ToList(); }
+            return string.Format("Thermostat {0}, CurrentTemp = {1}", Name, CurrentTemp);
         }
-
-        public void AddPeriod(TimePeriod timePeriod)
-        {
-            _periods.Add(timePeriod);
-        }
-    }
-
-    public class TimePeriod
-    {
-        public TimePeriod(DateTime fromTime, DateTime toTime)
-        {
-            FromTime = fromTime;
-            ToTime = toTime;
-        }
-
-        public DateTime FromTime { get; set; }
-        public DateTime ToTime { get; set; }
     }
 }

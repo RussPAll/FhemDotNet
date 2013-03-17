@@ -14,9 +14,9 @@ namespace FhemDotNet.Host.Mappers
             {
                 Name = input.Name,
                 Actuator = input.Actuator,
-                CurrentTemp = input.CurrentTemp.ToString(),
-                DesiredTemp = input.DesiredTemp ?? 5,
-                Mode = input.Mode == ThermostatMode.Auto ? "Auto" : "Manu",
+                CurrentTemp = new Measurement<string>(input.CurrentTemp.Value.ToString(), input.CurrentTemp.Timestamp),
+                DesiredTemp = new Measurement<float>(input.DesiredTemp.Value ?? 5, input.DesiredTemp.Timestamp),
+                Mode = new Measurement<string>(input.Mode.Value == ThermostatMode.Auto ? "Auto" : "Manu", input.Mode.Timestamp),
                 DaySchedules = GetDaySchedules(input)
             };
         }

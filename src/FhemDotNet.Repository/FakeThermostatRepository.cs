@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FhemDotNet.Domain;
-using FhemDotNet.Repository.Interfaces;
 
 namespace FhemDotNet.Repository
 {
@@ -13,29 +11,29 @@ namespace FhemDotNet.Repository
 
         static FakeThermostatRepository()
         {
-            Thermostats = new List<Thermostat>
-                               {
-                                   new Thermostat
-                                       {
-                                           CurrentTemp = 19,
-                                           DesiredTemp = 20,
-                                           Mode = ThermostatMode.Auto,
-                                           Name = "Bedroom"
-                                       },
-                                       
-                                   new Thermostat
-                                       {
-                                           CurrentTemp = 18,
-                                           DesiredTemp = 24,
-                                           Mode = ThermostatMode.Manu,
-                                           Name = "LivingRoom"
-                                       }
-                               };
+            Thermostats = new ThermostatList
+                {
+                    new Thermostat
+                        {
+                            CurrentTemp = new Measurement<float?>(19, DateTime.Now),
+                            DesiredTemp = new Measurement<float?>(20, DateTime.Now),
+                            Mode = new Measurement<ThermostatMode>(ThermostatMode.Auto, DateTime.Now),
+                            Name = "Bedroom"
+                        },
+
+                    new Thermostat
+                        {
+                            CurrentTemp = new Measurement<float?>(18, DateTime.Now),
+                            DesiredTemp = new Measurement<float?>(24, DateTime.Now),
+                            Mode = new Measurement<ThermostatMode>(ThermostatMode.Manu, DateTime.Now),
+                            Name = "LivingRoom"
+                        }
+                };
         }
 
-        public IList<Thermostat> GetThermostatList()
+        public List<Thermostat> GetThermostatList()
         {
-            return Thermostats;
+            return (List<Thermostat>)Thermostats;
         }
 
         public Thermostat GetThermostatByName(string deviceName)

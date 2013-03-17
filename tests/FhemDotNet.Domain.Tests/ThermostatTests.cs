@@ -1,8 +1,10 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace FhemDotNet.Domain.Tests
 {
     [TestFixture]
+    // ReSharper disable InconsistentNaming
     public class ThermostatTests
     {
         [Test]
@@ -12,9 +14,9 @@ namespace FhemDotNet.Domain.Tests
             var thermostat = new Thermostat
                                  {
                                      Name = "TestDevice",
-                                     CurrentTemp = 10
+                                     CurrentTemp = new Measurement<float?>(10, new DateTime(2013, 01, 01, 01, 02, 03))
                                  };
-            string expectedToString = string.Format(Resources.ToString.Thermostat, thermostat.Name, thermostat.CurrentTemp);
+            const string expectedToString = "Thermostat TestDevice, CurrentTemp = 10 (2013-01-01 01:02:03)";
 
             // Act
             string actualToString = thermostat.ToString();

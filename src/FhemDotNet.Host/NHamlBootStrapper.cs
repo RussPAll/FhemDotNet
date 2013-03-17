@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using FhemDotNet.Domain;
 using FhemDotNet.Repository;
 using FhemDotNet.Repository.Interfaces;
 using Nancy;
@@ -13,7 +14,8 @@ namespace FhemDotNet.Host
         protected override void ConfigureRequestContainer(Nancy.TinyIoc.TinyIoCContainer container, NancyContext context)
         {
             base.ConfigureRequestContainer(container, context);
-            container.Register<IThermostatRepository, ThermostatRepository>();
+            //container.Register<IThermostatRepository, ThermostatRepository>();
+            container.Register<IThermostatRepository, FakeThermostatRepository>();
             container.Register<ITelnetConnection>(
                 (i, n) => new TelnetConnection(ConfigurationManager.AppSettings["FhemServerName"],
                                                Int32.Parse(ConfigurationManager.AppSettings["FhemServerPort"])));
@@ -25,7 +27,7 @@ namespace FhemDotNet.Host
             base.ConfigureConventions(conventions);
 
             conventions.StaticContentsConventions.Add(
-                StaticContentConventionBuilder.AddDirectory("JsTests", "JsTests"));
+                StaticContentConventionBuilder.AddDirectory("content", "content"));
         }
 
         protected override IRootPathProvider RootPathProvider
