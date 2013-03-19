@@ -20,11 +20,11 @@
             %th Mode
         %tr(ng-repeat="device in devices")
             %td.thermostatName
-                {{device.Name.Value}}
+                {{device.Name}}
             %td.currentTemp
                 {{device.CurrentTemp.Value}}
                 %a
-                    %span(tooltip="Measured at {{device.CurrentTemp.Timestamp}}")bottom
+                    %span(tooltip="Measured at {{device.CurrentTemp.Timestamp}}")?
             %td.desiredTemp
                 %div(ui-slider="{'min':5,'max':29,'step':0.5}" ng-model="device.DesiredTemp"
                     ng-change="deviceTemperatureChanged(device.Name, device.DesiredTemp)")
