@@ -8,9 +8,5 @@ namespace FhemDotNet.Repository.Exceptions
         public FhemEmptyResponseException(string command)
             : base(string.Format(Resources.ExceptionMessages.FhemEmptyResponseExceptionMessage,
                 command)) { }
-
-        public FhemEmptyResponseException(string command, Exception exc)
-            : base(string.Format(Resources.ExceptionMessages.FhemEmptyResponseExceptionMessage,
-                command), exc) { }
     }
 }

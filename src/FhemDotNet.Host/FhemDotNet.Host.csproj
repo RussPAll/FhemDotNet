@@ -56,6 +56,8 @@
     </Reference>
     <Reference Include="Nancy.Hosting.Self">
       <HintPath>..\..\packages\Nancy.Hosting.Self.0.16.1\lib\net40\Nancy.Hosting.Self.dll</HintPath>
+      <Private>True</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Nancy.ViewEngines.NHaml">
       <HintPath>..\..\packages\Nancy.ViewEngines.NHaml.0.0.1\lib\net40\Nancy.ViewEngines.NHaml.dll</HintPath>
@@ -78,19 +80,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DevicesModule.cs" />
-    <Compile Include="FhemDotNetRootPathProvider.cs" />
+    <Compile Include="Models\MeasurementViewModel.cs" />
+    <Compile Include="Nancy\FhemDotNetRootPathProvider.cs" />
     <Compile Include="HomeModule.cs" />
     <Compile Include="Mappers\ThermostatMapper.cs" />
     <Compile Include="Models\DesiredTempCommand.cs" />
     <Compile Include="Models\DayScheduleViewModel.cs" />
     <Compile Include="Models\ThermostatViewModel.cs" />
-    <Compile Include="NHamlBootStrapper.cs" />
+    <Compile Include="Nancy\NHamlBootStrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Views\Devices\test.haml" />
     <None Include="Views\Home\Index.haml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

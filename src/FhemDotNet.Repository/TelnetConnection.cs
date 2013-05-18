@@ -31,6 +31,12 @@ namespace FhemDotNet.Repository
             _tcpSocket = new TcpClient(hostname, portNo);
         }
 
+        ~TelnetConnection()
+        {
+            if (_tcpSocket != null && IsConnected)
+                _tcpSocket.Close();
+        }
+
         public void WriteLine(string cmd)
         {
             Write(cmd + "\n");
@@ -39,8 +45,9 @@ namespace FhemDotNet.Repository
         /// <exception cref="System.ArgumentNullException">cmd is not specified</exception>
         public void Write(string cmd)
         {
-            if (!_tcpSocket.Connected) return;
-            byte[] buf = ASCIIEncoding.ASCII.GetBytes(cmd.Replace("\0xFF", "\0xFF\0xFF"));
+            if (!IsConnected) return;
+
+            byte[] buf = Encoding.ASCII.GetBytes(cmd.Replace("\0xFF", "\0xFF\0xFF"));
             _tcpSocket.GetStream().Write(buf, 0, buf.Length);
         }
 
@@ -49,8 +56,9 @@ namespace FhemDotNet.Repository
         /// <exception cref="System.Net.Sockets.SocketException">An error occurred when attempting to access the socket. See the Remarks section for more information.</exception>
         public string Read()
         {
-            if (!_tcpSocket.Connected) return null;
-            StringBuilder sb = new StringBuilder();
+            if (!IsConnected) return null;
+
+            var sb = new StringBuilder();
             do
             {
                 ParseTelnet(sb);
@@ -96,8 +104,6 @@ namespace FhemDotNet.Repository
                                 else
                                     _tcpSocket.GetStream().WriteByte(inputverb == (int)Verbs.Do ? (byte)Verbs.Wont : (byte)Verbs.Dont);
                                 _tcpSocket.GetStream().WriteByte((byte)inputoption);
-                                break;
-                            default:
                                 break;
                         }
                         break;

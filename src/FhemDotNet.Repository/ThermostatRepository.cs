@@ -30,33 +30,36 @@ namespace FhemDotNet.Repository
 
         private XmlDocument GetXmlDocumentFromFhem(string command, int timeout)
         {
-            _telnetConnection.WriteLine(command);
-
-            string response = "";
-
-            Stopwatch timer = Stopwatch.StartNew();
-            System.Exception lastException = null;
-
-            while (timer.ElapsedMilliseconds < timeout)
+            lock (_telnetConnection)
             {
-                response += _telnetConnection.Read();
-                var document = new XmlDocument();
-                try
+                _telnetConnection.WriteLine(command);
+
+                string response = "";
+
+                Stopwatch timer = Stopwatch.StartNew();
+                System.Exception lastException = null;
+
+                while (timer.ElapsedMilliseconds < timeout)
                 {
-                    document.LoadXml(response);
-                    return document;
+                    response += _telnetConnection.Read();
+                    var document = new XmlDocument();
+                    try
+                    {
+                        document.LoadXml(response);
+                        return document;
+                    }
+                    catch (XmlException exception)
+                    {
+                        // Assume that the document's not completely loaded yet, so we'll try again
+                        lastException = exception;
+                    }
                 }
-                catch (XmlException exception)
-                {
-                    // Assume that the document's not completely loaded yet, so we'll try again
-                    lastException = exception;
-                }
+
+                if (string.IsNullOrEmpty(response))
+                    throw new FhemEmptyResponseException(command);
+
+                throw new FhemResponseTimeoutException(command, timeout, lastException);
             }
-
-            if (string.IsNullOrEmpty(response))
-                throw new FhemEmptyResponseException(command);
-
-            throw new FhemResponseTimeoutException(command, timeout, lastException);
         }
     }
 }

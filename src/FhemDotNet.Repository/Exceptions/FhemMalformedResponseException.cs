@@ -8,9 +8,5 @@ namespace FhemDotNet.Repository.Exceptions
         public FhemMalformedResponseException(string errorDetail)
             : base(string.Format(Resources.ExceptionMessages.FhemMalformedResponseExceptionMessage,
                 errorDetail)) { }
-
-        public FhemMalformedResponseException(string errorDetail, Exception exc)
-            : base(string.Format(Resources.ExceptionMessages.FhemMalformedResponseExceptionMessage,
-                errorDetail), exc) { }
     }
 }

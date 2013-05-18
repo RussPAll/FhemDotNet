@@ -13,10 +13,10 @@ namespace FhemDotNet.Host.Mappers
             return new ThermostatViewModel
             {
                 Name = input.Name,
-                Actuator = input.Actuator,
-                CurrentTemp = new Measurement<string>(input.CurrentTemp.Value.ToString(), input.CurrentTemp.Timestamp),
-                DesiredTemp = new Measurement<float>(input.DesiredTemp.Value ?? 5, input.DesiredTemp.Timestamp),
-                Mode = new Measurement<string>(input.Mode.Value == ThermostatMode.Auto ? "Auto" : "Manu", input.Mode.Timestamp),
+                Actuator = new MeasurementViewModel<string>(input.Actuator.Value, input.Actuator.Timestamp),
+                CurrentTemp = new MeasurementViewModel<string>(input.CurrentTemp.Value.ToString(), input.CurrentTemp.Timestamp),
+                DesiredTemp = new MeasurementViewModel<float>(input.DesiredTemp.Value ?? 5, input.DesiredTemp.Timestamp),
+                Mode = new MeasurementViewModel<string>(input.Mode.Value == ThermostatMode.Auto ? "Auto" : "Manu", input.Mode.Timestamp),
                 DaySchedules = GetDaySchedules(input)
             };
         }

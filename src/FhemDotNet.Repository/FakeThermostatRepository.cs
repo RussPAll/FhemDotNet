@@ -14,6 +14,7 @@ namespace FhemDotNet.Repository
                 {
                     new Thermostat
                         {
+                            Actuator = new Measurement<string>("55%", DateTime.Now),
                             CurrentTemp = new Measurement<float?>(19, DateTime.Now),
                             DesiredTemp = new Measurement<float?>(20, DateTime.Now),
                             Mode = new Measurement<ThermostatMode>(ThermostatMode.Auto, DateTime.Now),
@@ -22,6 +23,7 @@ namespace FhemDotNet.Repository
 
                     new Thermostat
                         {
+                            Actuator = new Measurement<string>("55%", DateTime.Now),
                             CurrentTemp = new Measurement<float?>(18, DateTime.Now),
                             DesiredTemp = new Measurement<float?>(24, DateTime.Now),
                             Mode = new Measurement<ThermostatMode>(ThermostatMode.Manu, DateTime.Now),
