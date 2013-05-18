@@ -13,7 +13,7 @@ namespace FhemDotNet.Host
                 {
                     UnhandledExceptionCallback = e => Console.WriteLine(e.ToString())
                 };
-            var nancyHost = new NancyHost(new NHamlBootstrapper(), hostConfiguration, new Uri("http://localhost:8081"));
+            var nancyHost = new NancyHost(new NHamlBootstrapper(), hostConfiguration, new [] { new Uri("http://localhost:8081") });
             nancyHost.Start();
 
             Console.WriteLine("Nancy now listening. Press enter to stop");

@@ -2,7 +2,12 @@
 
 namespace FhemDotNet.Domain
 {
-    public class DevicesInteractor
+    public interface IDevicesInteractor
+    {
+        IEnumerable<Thermostat> GetDeviceList();
+    }
+
+    public class DevicesInteractor : IDevicesInteractor
     {
         private readonly IThermostatRepository _repoository;
 

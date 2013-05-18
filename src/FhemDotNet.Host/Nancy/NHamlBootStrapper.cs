@@ -5,6 +5,7 @@ using FhemDotNet.Domain;
 using FhemDotNet.Repository;
 using FhemDotNet.Repository.Interfaces;
 using Nancy;
+using Nancy.Bootstrapper;
 using Nancy.Conventions;
 using Nancy.TinyIoc;
 using Nancy.ViewEngines.NHaml;
@@ -23,6 +24,7 @@ namespace FhemDotNet.Host.Nancy
         private void RegisterCorrectThermostatRepository(TinyIoCContainer container)
         {
             var serverName = ConfigurationManager.AppSettings["FhemServerName"];
+            container.Register<IDevicesInteractor, DevicesInteractor>().AsSingleton();
             if (IsServerAccessible(serverName))
             {
                 container.Register<IThermostatRepository, ThermostatRepository>().AsSingleton();

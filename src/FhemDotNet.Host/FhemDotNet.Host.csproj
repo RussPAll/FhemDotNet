@@ -59,7 +59,7 @@
       <Private>True</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="Nancy.ViewEngines.NHaml">
+    <Reference Include="Nancy.ViewEngines.NHaml, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Nancy.ViewEngines.NHaml.0.0.1\lib\net40\Nancy.ViewEngines.NHaml.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -239,6 +239,9 @@
     <Content Include="content\styles\bootstrap.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

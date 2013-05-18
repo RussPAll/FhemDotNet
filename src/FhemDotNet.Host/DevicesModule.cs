@@ -8,13 +8,13 @@ namespace FhemDotNet.Host
 {
     public class DevicesModule : NancyModule
     {
-        public DevicesModule(DevicesInteractor devicesInteractor)
+        public DevicesModule(IDevicesInteractor devicesInteractor)
         {
             Get["/devices"] = GetDeviceList(devicesInteractor);
             Put["/devices/{deviceName}/desiredTempCommand"] = SetDesiredTemp(devicesInteractor);
         }
 
-        private static Func<dynamic, dynamic> GetDeviceList(DevicesInteractor devicesInteractor)
+        private static Func<dynamic, dynamic> GetDeviceList(IDevicesInteractor devicesInteractor)
         {
             return arg =>
                 {
@@ -23,7 +23,7 @@ namespace FhemDotNet.Host
                 };
         }
 
-        private Func<dynamic, dynamic> SetDesiredTemp(DevicesInteractor thermostatRepository)
+        private Func<dynamic, dynamic> SetDesiredTemp(IDevicesInteractor thermostatRepository)
         {
             return parameters => Response;
         }
