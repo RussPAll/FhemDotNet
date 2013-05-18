@@ -1,14 +1,28 @@
-﻿td.desiredTemp
-{
-    width: 19em;
+﻿ul.deviceList {
+    list-style-type: none; 
 }
-td.desiredTemp .ui-slider 
-{
-    width: 12em;
+ul.deviceList li {
+    clear: both;
+}
+ul.deviceList .deviceName {
     float: left;
-    margin: 5px 20px 5px 5px;
+    width: 8em;
+    height: 7em;
+    font-weight: bold;
+    vertical-align: middle;
 }
-td.desiredTemp input
+ul.deviceList .desiredTemp
+{
+    float: left;
+    width: 43em;
+}
+ul.deviceList .desiredTemp .ui-slider 
+{
+    display: inline-block;
+    width: 34em;
+    margin: 5px;
+}
+ul.deviceList .desiredTemp input
 {
     width: 2.5em;
 }
