@@ -6,7 +6,7 @@
     $scope.deviceTemperatureChanged = function (deviceName, newDesiredTemp) {
         $http.put('/devices/' + deviceName + "/desiredTempCommand", { 'NewDesiredTemp': newDesiredTemp}).
             success(function() {
-                alert("Saved a device change");
+                //alert("Saved a device change");
             });
     };
 });

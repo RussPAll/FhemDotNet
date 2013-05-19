@@ -1,0 +1,44 @@
+.caption {
+    font-size: 65%;
+    text-align: left;
+}
+
+ul.deviceList {
+    list-style-type: none;
+
+    li {
+        clear: both;
+        .deviceName {
+            float: left;
+            width: 8em;
+            height: 7em;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        .deviceProperties {
+            float: left;
+
+            .desiredTemp {
+                width: 30em;
+                float: left;
+                margin-left: 1em;
+                .sliderContainer {
+                }
+            }
+            .currentTemp, .currentActuator, .mode {
+                float: left;
+                width: 7em;
+                text-align: center;
+                margin-left: 1em;
+                span {
+                    font-size: 170%
+                }
+            }
+            .mode select {
+                width: 8em;
+            }
+        }
+    }
+}
+

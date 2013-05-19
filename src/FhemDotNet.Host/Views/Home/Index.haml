@@ -17,53 +17,24 @@
                 {{device.Name}}
             .deviceProperties
                 .desiredTemp
-                    %div(ui-slider="{'min':5,'max':29,'step':0.5}" ng-model="device.DesiredTemp.Value"
-                        ng-change="deviceTemperatureChanged(device.Name, device.DesiredTemp)")
-                    %input(ng-model="device.DesiredTemp.Value" ng-model-onblur)
+                    .sliderContainer
+                        %input(type="slider" ui-slider="{'from':5,'to':29,'step':0.5}" ng-model="device.DesiredTemp.Value"
+                            ng-change="deviceTemperatureChanged(device.Name, device.DesiredTemp)")
                 .currentTemp
-                    {{device.CurrentTemp.Value}}
+                    .caption Current Temp:
+                    %span {{device.CurrentTemp.Value}}
                     %a
                         %span(tooltip="Measured at {{device.CurrentTemp.Timestamp}}")?
                 .currentActuator
-                    {{device.Actuator.Value}}
+                    .caption Actuator:
+                    %span {{device.Actuator.Value}}
                     %a
                         %span(tooltip="Measured at {{device.Actuator.Timestamp}}")?
-                .mode
+                /.mode
                     %select(ng-model="device.Mode.Value")
                         %option(value="Auto") Auto
                         %option(value="Manu") Manu
                     %a
                         %span(tooltip="Measured at {{device.Mode.Timestamp}}")?
-
-/    %table#thermostatTable(ng-controller="ThermostatListCtrl")
-        %tr
-            %th Room
-            %th Current Temp
-            %th Desired Temperature
-            %th Actuator %
-            %th Mode
-        %tr(ng-repeat="device in devices")
-            %td.thermostatName
-                {{device.Name}}
-            %td.currentTemp
-                {{device.CurrentTemp.Value}}
-                %a
-                    %span(tooltip="Measured at {{device.CurrentTemp.Timestamp}}")?
-            %td.desiredTemp
-                %div(ui-slider="{'min':5,'max':29,'step':0.5}" ng-model="device.DesiredTemp.Value"
-                    ng-change="deviceTemperatureChanged(device.Name, device.DesiredTemp)")
-                %input(ng-model="device.DesiredTemp.Value" ng-model-onblur)
-            %td.actuator
-                {{device.Actuator.Value}}
-                %a
-                    %span(tooltip="Measured at {{device.Actuator.Timestamp}}")?
-            %td.mode
-                %select(ng-model="device.Mode.Value")
-                    %option(value="Auto") Auto
-                    %option(value="Manu") Manu
-                %a
-                    %span(tooltip="Measured at {{device.Mode.Timestamp}}")?
-            /%td.more
-                %a(href="/devices/{{device.Name}}") more...
 
 %script(src="/content/scripts/controllers/devices.js")
