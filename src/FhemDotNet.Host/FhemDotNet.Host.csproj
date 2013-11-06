@@ -254,6 +254,7 @@
     </Content>
     <Content Include="content\styles\jslider.css" />
     <Content Include="content\styles\jslider.png" />
+    <Content Include="JsTests\Mocks\JsonList.js" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
